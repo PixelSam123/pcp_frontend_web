@@ -19,20 +19,25 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${jetbrainsMono.className} min-h-full bg-[#1e1e1e] text-white`}
+        className={`${jetbrainsMono.className} min-h-full bg-[#1e1e1e] px-3 text-white`}
       >
-        <nav className="bg[#1e1e2e] sticky top-0 flex">
-          <Link
-            href="/"
-            className="bg-white font-bold text-black hover:bg-sky-400"
-          >
-            pcp
-          </Link>
-          <Link href="/create" className="underline hover:text-sky-400">
-            Creator Panel
-          </Link>
+        <nav className="bg[#1e1e2e] sticky top-0 flex justify-between">
+          <div className="flex items-center gap-3">
+            <Link
+              href="/"
+              className="the-btn flex items-center self-stretch font-bold"
+            >
+              pcp
+            </Link>
+            <Link href="/create" className="underline hover:text-sky-400">
+              Creator Panel
+            </Link>
+          </div>
+
           <ProfileButton />
         </nav>
+
+        <div className="h-3" />
         {children}
       </body>
     </html>

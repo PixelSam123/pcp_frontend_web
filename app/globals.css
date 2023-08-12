@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .the-btn {
+    @apply bg-white px-3 py-1 text-[#1e1e1e] hover:bg-sky-400;
+  }
+}

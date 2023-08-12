@@ -1,3 +1,9 @@
 export default function Create() {
-  return <p>Create Page</p>
+  return (
+    <>
+      <fieldset className="border border-white">
+        <legend className="mx-auto px-3">Published Challenges</legend>
+      </fieldset>
+    </>
+  )
 }
