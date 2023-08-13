@@ -8,7 +8,7 @@ export default function ProfileButton() {
     <DropdownMenu.Root>
       <DropdownMenu.Trigger className="the-btn group flex select-none items-center gap-3">
         <div className="text-left">
-          <p>Akane</p>
+          <p>herecomes_arima</p>
           <p className="text-xs">4096 pts</p>
         </div>
         <IconSelect className="transition-transform group-rdx-state-open:rotate-180" />
