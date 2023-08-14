@@ -1,4 +1,8 @@
+'use client'
+
+import { Editor } from '@monaco-editor/react'
 import ChallengeHeader from '../components/ChallengeHeader'
+import TheDialog from '../components/TheDialog'
 
 export default function Create() {
   return (
@@ -11,7 +15,45 @@ export default function Create() {
           <button className="the-btn">Edit</button>
         </div>
       </div>
-      <button className="the-btn">Create New Challenge</button>
+      <TheDialog
+        title="Create New Challenge"
+        description="Fill in new challenge details"
+      >
+        <label htmlFor="title" className="block font-bold">
+          Title
+        </label>
+        <input
+          type="text"
+          name="title"
+          id="title"
+          className="the-input"
+          placeholder="Enter challenge title"
+        />
+
+        <p className="block font-bold">Description</p>
+        <Editor
+          height="8rem"
+          defaultLanguage="markdown"
+          theme="vs-dark"
+          options={{ minimap: { enabled: false } }}
+        />
+
+        <p className="block font-bold">Initial Code</p>
+        <Editor
+          height="8rem"
+          defaultLanguage="javascript"
+          theme="vs-dark"
+          options={{ minimap: { enabled: false } }}
+        />
+
+        <p className="block font-bold">Test Cases</p>
+        <Editor
+          height="8rem"
+          defaultLanguage="javascript"
+          theme="vs-dark"
+          options={{ minimap: { enabled: false } }}
+        />
+      </TheDialog>
     </div>
   )
 }

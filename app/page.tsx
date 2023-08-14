@@ -9,10 +9,10 @@ import {
   IconUser,
 } from '@tabler/icons-react'
 import * as Checkbox from '@radix-ui/react-checkbox'
-import * as Dialog from '@radix-ui/react-dialog'
 import Link from 'next/link'
 import TheSelect from './components/TheSelect'
 import ChallengeHeader from './components/ChallengeHeader'
+import TheDialog from './components/TheDialog'
 
 export default function Home() {
   const challenges = [
@@ -55,43 +55,25 @@ export default function Home() {
             ))}
           </div>
 
-          <Dialog.Root>
-            <Dialog.Trigger className="the-btn block w-full">
-              Tag Selection
-            </Dialog.Trigger>
-            <Dialog.Portal>
-              <Dialog.Overlay className="fixed inset-0 bg-black/50" />
-              <Dialog.Content className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#1e1e1e]">
-                <div className="the-card space-y-3">
-                  <Dialog.Title className="font-bold">
-                    Tag Selection
-                  </Dialog.Title>
-                  <Dialog.Description className="text-center">
-                    WIP!
-                  </Dialog.Description>
-                </div>
-              </Dialog.Content>
-            </Dialog.Portal>
-          </Dialog.Root>
+          <TheDialog
+            title="Tag Selection"
+            description="Activate tags by clicking on them."
+          >
+            <div className="flex flex-wrap gap-3">
+              <button className="the-btn">strings</button>
+              <button className="the-btn">algorithms</button>
+            </div>
+          </TheDialog>
 
-          <Dialog.Root>
-            <Dialog.Trigger className="the-btn block w-full">
-              Language Selection
-            </Dialog.Trigger>
-            <Dialog.Portal>
-              <Dialog.Overlay className="fixed inset-0 bg-black/50" />
-              <Dialog.Content className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#1e1e1e]">
-                <div className="the-card space-y-3">
-                  <Dialog.Title className="font-bold">
-                    Language Selection
-                  </Dialog.Title>
-                  <Dialog.Description className="text-center">
-                    WIP!
-                  </Dialog.Description>
-                </div>
-              </Dialog.Content>
-            </Dialog.Portal>
-          </Dialog.Root>
+          <TheDialog
+            title="Language Selection"
+            description="Activate languages by clicking on them."
+          >
+            <div className="flex flex-wrap gap-3">
+              <button className="the-btn">javascript</button>
+              <button className="the-btn">lua</button>
+            </div>
+          </TheDialog>
 
           <p>Sort By</p>
           <TheSelect
@@ -136,7 +118,9 @@ export default function Home() {
           <div className="flex items-center gap-x-2 gap-y-1 text-sm">
             <IconTag size="20" />
             {challenge.tags.map((tag) => (
-              <p key={tag}>{tag}</p>
+              <p key={tag} className="underline hover:text-sky-400">
+                {tag}
+              </p>
             ))}
           </div>
 

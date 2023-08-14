@@ -2,6 +2,7 @@
 
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import { IconSelect } from '@tabler/icons-react'
+import TheDialog from './TheDialog'
 
 export default function ProfileButton() {
   return (
@@ -16,7 +17,36 @@ export default function ProfileButton() {
 
       <DropdownMenu.Portal>
         <DropdownMenu.Content className="select-none border border-[#1e1e1e]">
-          <DropdownMenu.Item className="the-btn">Sign Out</DropdownMenu.Item>
+          <DropdownMenu.Item onSelect={(e) => e.preventDefault()}>
+            <TheDialog title="Sign In" description="Sign in to your account.">
+              <div className="flex flex-col gap-3">
+                <label htmlFor="username">Username</label>
+                <input
+                  id="username"
+                  type="text"
+                  className="the-input"
+                  placeholder="Username"
+                />
+
+                <label htmlFor="password">Password</label>
+                <input
+                  id="password"
+                  type="password"
+                  className="the-input"
+                  placeholder="Password"
+                />
+
+                <button className="the-btn">Sign In</button>
+
+                <p className="text-xs">
+                  Don&apos;t have an account?{' '}
+                  <a href="#" className="underline">
+                    Sign Up
+                  </a>
+                </p>
+              </div>
+            </TheDialog>
+          </DropdownMenu.Item>
         </DropdownMenu.Content>
       </DropdownMenu.Portal>
     </DropdownMenu.Root>
