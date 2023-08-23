@@ -1,5 +1,5 @@
-async function fetchJson<T>(link: string): Promise<T> {
-  const res = await fetch(link)
+async function fetchJson<T>(link: string, init?: RequestInit): Promise<T> {
+  const res = await fetch(link, init)
   if (!res.ok) {
     throw new Error(`Network response not OK! ${res.status} ${res.statusText}`)
   }
@@ -7,8 +7,8 @@ async function fetchJson<T>(link: string): Promise<T> {
   return res.json()
 }
 
-async function fetchString(link: string) {
-  const res = await fetch(link)
+async function fetchString(link: string, init?: RequestInit) {
+  const res = await fetch(link, init)
   if (!res.ok) {
     throw new Error(`Network response not OK! ${res.status} ${res.statusText}`)
   }

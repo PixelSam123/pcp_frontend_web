@@ -66,11 +66,12 @@ interface PcpService {
 
   createChallengeSubmissionVote(
     challengeSubmissionVoteToCreate: ChallengeSubmissionVoteCreateDto,
+    token: string,
   ): Promise<ChallengeSubmissionVoteDto>
   getChallengeSubmissionVotesBySubmissionId(
     submissionId: number,
   ): Promise<ChallengeSubmissionVoteDto[]>
-  deleteSubmissionVote(id: number): Promise<void>
+  deleteSubmissionVote(id: number, token: string): Promise<void>
 }
 
 export type { PcpService }
