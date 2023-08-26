@@ -12,28 +12,24 @@ import {
   ChallengeSubmissionVoteDto,
   ChallengeVoteCreateDto,
   ChallengeVoteDto,
-  Token,
   UserBriefDto,
   UserCreateDto,
 } from './types'
 
 interface PcpService {
-  loginForToken(username: string, password: string): Promise<Token>
+  login(username: string, password: string): Promise<void>
+  logout(): Promise<void>
 
   createUser(userToCreate: UserCreateDto): Promise<UserBriefDto>
   getUsers(): Promise<UserBriefDto[]>
   getUserByName(name: string): Promise<UserBriefDto>
 
-  createChallenge(
-    challengeToCreate: ChallengeCreateDto,
-    token: string,
-  ): Promise<ChallengeDto>
+  createChallenge(challengeToCreate: ChallengeCreateDto): Promise<ChallengeDto>
   getChallenges(): Promise<ChallengeBriefDto[]>
   getChallengeByName(name: string): Promise<ChallengeDto>
 
   createChallengeComment(
     challengeCommentToCreate: ChallengeCommentCreateDto,
-    token: string,
   ): Promise<ChallengeCommentDto>
   getChallengeCommentsByChallengeName(
     challengeName: string,
@@ -41,16 +37,14 @@ interface PcpService {
 
   createChallengeVote(
     challengeVoteToCreate: ChallengeVoteCreateDto,
-    token: string,
   ): Promise<ChallengeVoteDto>
   getChallengeVotesByChallengeName(
     challengeName: string,
   ): Promise<ChallengeVoteDto[]>
-  deleteChallengeVote(id: number, token: string): Promise<void>
+  deleteChallengeVote(id: number): Promise<void>
 
   createChallengeSubmission(
     challengeSubmissionToCreate: ChallengeSubmissionCreateDto,
-    token: string,
   ): Promise<ChallengeSubmissionDto>
   getChallengeSubmissionsByChallengeName(
     challengeName: string,
@@ -58,7 +52,6 @@ interface PcpService {
 
   createChallengeSubmissionComment(
     challengeSubmissionCommentToCreate: ChallengeSubmissionCommentCreateDto,
-    token: string,
   ): Promise<ChallengeSubmissionCommentDto>
   getChallengeSubmissionCommentsByChallengeSubmissionId(
     challengeSubmissionId: number,
@@ -66,12 +59,11 @@ interface PcpService {
 
   createChallengeSubmissionVote(
     challengeSubmissionVoteToCreate: ChallengeSubmissionVoteCreateDto,
-    token: string,
   ): Promise<ChallengeSubmissionVoteDto>
   getChallengeSubmissionVotesBySubmissionId(
     submissionId: number,
   ): Promise<ChallengeSubmissionVoteDto[]>
-  deleteSubmissionVote(id: number, token: string): Promise<void>
+  deleteSubmissionVote(id: number): Promise<void>
 }
 
 export type { PcpService }

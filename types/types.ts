@@ -1,8 +1,3 @@
-type Token = {
-  access_token: string
-  token_type: string
-}
-
 type UserCreateDto = {
   name: string
   password: string
@@ -94,7 +89,6 @@ type ChallengeSubmissionVoteDto = {
 }
 
 export type {
-  Token,
   UserCreateDto,
   UserBriefDto,
   ChallengeCreateDto,

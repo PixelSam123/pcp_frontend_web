@@ -16,4 +16,11 @@ async function fetchString(link: string, init?: RequestInit) {
   return res.text()
 }
 
-export { fetchJson, fetchString }
+async function fetchVoid(link: string, init?: RequestInit) {
+  const res = await fetch(link, init)
+  if (!res.ok) {
+    throw new Error(`Network response not OK! ${res.status} ${res.statusText}`)
+  }
+}
+
+export { fetchJson, fetchString, fetchVoid }

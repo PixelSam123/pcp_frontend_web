@@ -1,6 +1,5 @@
 import { PcpService } from '@/types/PcpService'
 import {
-  Token,
   UserCreateDto,
   UserBriefDto,
   ChallengeCreateDto,
@@ -17,7 +16,7 @@ import {
   ChallengeSubmissionVoteCreateDto,
   ChallengeSubmissionVoteDto,
 } from '@/types/types'
-import { fetchJson } from '@/utils/utils'
+import { fetchJson, fetchVoid } from '@/utils/utils'
 
 class RealPcpService implements PcpService {
   private readonly baseUrl: string
@@ -26,13 +25,19 @@ class RealPcpService implements PcpService {
     this.baseUrl = baseUrl
   }
 
-  async loginForToken(username: string, password: string): Promise<Token> {
-    return await fetchJson(`${this.baseUrl}/token`, {
+  async login(username: string, password: string): Promise<void> {
+    await fetchVoid(`${this.baseUrl}/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: new URLSearchParams({ username, password }),
+    })
+  }
+
+  async logout(): Promise<void> {
+    await fetchVoid(`${this.baseUrl}/logout`, {
+      method: 'POST',
     })
   }
 
@@ -56,13 +61,11 @@ class RealPcpService implements PcpService {
 
   async createChallenge(
     challengeToCreate: ChallengeCreateDto,
-    token: string,
   ): Promise<ChallengeDto> {
     return await fetchJson(`${this.baseUrl}/challenges`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(challengeToCreate),
     })
@@ -78,13 +81,11 @@ class RealPcpService implements PcpService {
 
   async createChallengeComment(
     challengeCommentToCreate: ChallengeCommentCreateDto,
-    token: string,
   ): Promise<ChallengeCommentDto> {
     return await fetchJson(`${this.baseUrl}/challenge_comments`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(challengeCommentToCreate),
     })
@@ -100,13 +101,11 @@ class RealPcpService implements PcpService {
 
   async createChallengeVote(
     challengeVoteToCreate: ChallengeVoteCreateDto,
-    token: string,
   ): Promise<ChallengeVoteDto> {
     return await fetchJson(`${this.baseUrl}/challenge_votes`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(challengeVoteToCreate),
     })
@@ -118,22 +117,19 @@ class RealPcpService implements PcpService {
     return await fetchJson(`${this.baseUrl}/challenge_votes/${challengeName}`)
   }
 
-  async deleteChallengeVote(id: number, token: string): Promise<void> {
+  async deleteChallengeVote(id: number): Promise<void> {
     return await fetchJson(`${this.baseUrl}/challenge_votes/${id}`, {
       method: 'DELETE',
-      headers: { Authorization: `Bearer ${token}` },
     })
   }
 
   async createChallengeSubmission(
     challengeSubmissionToCreate: ChallengeSubmissionCreateDto,
-    token: string,
   ): Promise<ChallengeSubmissionDto> {
     return await fetchJson(`${this.baseUrl}/challenge_submissions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(challengeSubmissionToCreate),
     })
@@ -149,13 +145,11 @@ class RealPcpService implements PcpService {
 
   async createChallengeSubmissionComment(
     challengeSubmissionCommentToCreate: ChallengeSubmissionCommentCreateDto,
-    token: string,
   ): Promise<ChallengeSubmissionCommentDto> {
     return await fetchJson(`${this.baseUrl}/challenge_submission_comments`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(challengeSubmissionCommentToCreate),
     })
@@ -171,13 +165,11 @@ class RealPcpService implements PcpService {
 
   async createChallengeSubmissionVote(
     challengeSubmissionVoteToCreate: ChallengeSubmissionVoteCreateDto,
-    token: string,
   ): Promise<ChallengeSubmissionVoteDto> {
     return await fetchJson(`${this.baseUrl}/challenge_submission_votes`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(challengeSubmissionVoteToCreate),
     })
@@ -191,10 +183,9 @@ class RealPcpService implements PcpService {
     )
   }
 
-  async deleteSubmissionVote(id: number, token: string): Promise<void> {
+  async deleteSubmissionVote(id: number): Promise<void> {
     return await fetchJson(`${this.baseUrl}/challenge_votes/${id}`, {
       method: 'DELETE',
-      headers: { Authorization: `Bearer ${token}` },
     })
   }
 }
