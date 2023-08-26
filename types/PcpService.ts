@@ -12,13 +12,15 @@ import {
   ChallengeSubmissionVoteDto,
   ChallengeVoteCreateDto,
   ChallengeVoteDto,
+  Session,
   UserBriefDto,
   UserCreateDto,
 } from './types'
 
 interface PcpService {
-  login(username: string, password: string): Promise<void>
-  logout(): Promise<void>
+  sessionLogin(username: string, password: string): Promise<void>
+  sessionLogout(): Promise<void>
+  sessionGet(): Promise<Session>
 
   createUser(userToCreate: UserCreateDto): Promise<UserBriefDto>
   getUsers(): Promise<UserBriefDto[]>

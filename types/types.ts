@@ -1,3 +1,7 @@
+type Session = {
+  userInfo: UserBriefDto
+}
+
 type UserCreateDto = {
   name: string
   password: string
@@ -89,6 +93,7 @@ type ChallengeSubmissionVoteDto = {
 }
 
 export type {
+  Session,
   UserCreateDto,
   UserBriefDto,
   ChallengeCreateDto,

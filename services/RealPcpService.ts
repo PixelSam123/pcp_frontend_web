@@ -15,6 +15,7 @@ import {
   ChallengeSubmissionCommentDto,
   ChallengeSubmissionVoteCreateDto,
   ChallengeSubmissionVoteDto,
+  Session,
 } from '@/types/types'
 import { fetchJson, fetchVoid } from '@/utils/utils'
 
@@ -25,8 +26,8 @@ class RealPcpService implements PcpService {
     this.baseUrl = baseUrl
   }
 
-  async login(username: string, password: string): Promise<void> {
-    await fetchVoid(`${this.baseUrl}/login`, {
+  async sessionLogin(username: string, password: string): Promise<void> {
+    await fetchVoid(`${this.baseUrl}/session/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -35,10 +36,14 @@ class RealPcpService implements PcpService {
     })
   }
 
-  async logout(): Promise<void> {
-    await fetchVoid(`${this.baseUrl}/logout`, {
+  async sessionLogout(): Promise<void> {
+    await fetchVoid(`${this.baseUrl}/session/logout`, {
       method: 'POST',
     })
+  }
+
+  async sessionGet(): Promise<Session> {
+    return await fetchJson(`${this.baseUrl}/session`)
   }
 
   async createUser(userToCreate: UserCreateDto): Promise<UserBriefDto> {
