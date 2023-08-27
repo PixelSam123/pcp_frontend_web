@@ -38,12 +38,39 @@ export default function ProfileButton() {
 
                 <button className="the-btn">Sign In</button>
 
-                <p className="text-xs">
-                  Don&apos;t have an account?{' '}
-                  <a href="#" className="underline">
-                    Sign Up
-                  </a>
-                </p>
+                <p>Don&apos;t have an account?</p>
+                <TheDialog
+                  title="Sign Up"
+                  description="Create a new user for you."
+                >
+                  <div className="flex flex-col gap-3">
+                    <label htmlFor="username">Username</label>
+                    <input
+                      id="username"
+                      type="text"
+                      className="the-input"
+                      placeholder="Username"
+                    />
+
+                    <label htmlFor="password">Password</label>
+                    <input
+                      id="password"
+                      type="password"
+                      className="the-input"
+                      placeholder="Password"
+                    />
+
+                    <label htmlFor="confirm-password">Confirm Password</label>
+                    <input
+                      id="confirm-password"
+                      type="password"
+                      className="the-input"
+                      placeholder="Confirm Password"
+                    />
+
+                    <button className="the-btn">Sign Up</button>
+                  </div>
+                </TheDialog>
               </div>
             </TheDialog>
           </DropdownMenu.Item>
