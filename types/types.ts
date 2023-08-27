@@ -25,6 +25,7 @@ type ChallengeDto = {
   id: number
   name: string
   tier: number
+  completedCount: number
   user: UserBriefDto
   description: string
   initialCode: string
@@ -34,6 +35,7 @@ type ChallengeBriefDto = {
   id: number
   name: string
   tier: number
+  completedCount: number
   user: UserBriefDto
 }
 
