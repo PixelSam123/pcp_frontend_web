@@ -194,3 +194,7 @@ class RealPcpService implements PcpService {
     })
   }
 }
+
+const instance = new RealPcpService('http://localhost:8080')
+
+export { instance as pcpService }
