@@ -22,24 +22,24 @@ interface PcpService {
   sessionLogout(): Promise<void>
   sessionGet(): Promise<Session>
 
-  createUser(userToCreate: UserCreateDto): Promise<UserBriefDto>
+  createUser(userToCreate: UserCreateDto): Promise<void>
   getUsers(): Promise<UserBriefDto[]>
   getUserByName(name: string): Promise<UserBriefDto>
 
-  createChallenge(challengeToCreate: ChallengeCreateDto): Promise<ChallengeDto>
+  createChallenge(challengeToCreate: ChallengeCreateDto): Promise<void>
   getChallenges(): Promise<ChallengeBriefDto[]>
   getChallengeByName(name: string): Promise<ChallengeDto>
 
   createChallengeComment(
     challengeCommentToCreate: ChallengeCommentCreateDto,
-  ): Promise<ChallengeCommentDto>
+  ): Promise<void>
   getChallengeCommentsByChallengeName(
     challengeName: string,
   ): Promise<ChallengeCommentDto[]>
 
   createChallengeVote(
     challengeVoteToCreate: ChallengeVoteCreateDto,
-  ): Promise<ChallengeVoteDto>
+  ): Promise<void>
   getChallengeVotesByChallengeName(
     challengeName: string,
   ): Promise<ChallengeVoteDto[]>
@@ -47,21 +47,21 @@ interface PcpService {
 
   createChallengeSubmission(
     challengeSubmissionToCreate: ChallengeSubmissionCreateDto,
-  ): Promise<ChallengeSubmissionDto>
+  ): Promise<void>
   getChallengeSubmissionsByChallengeName(
     challengeName: string,
   ): Promise<ChallengeSubmissionDto[]>
 
   createChallengeSubmissionComment(
     challengeSubmissionCommentToCreate: ChallengeSubmissionCommentCreateDto,
-  ): Promise<ChallengeSubmissionCommentDto>
+  ): Promise<void>
   getChallengeSubmissionCommentsByChallengeSubmissionId(
     challengeSubmissionId: number,
   ): Promise<ChallengeSubmissionCommentDto[]>
 
   createChallengeSubmissionVote(
     challengeSubmissionVoteToCreate: ChallengeSubmissionVoteCreateDto,
-  ): Promise<ChallengeSubmissionVoteDto>
+  ): Promise<void>
   getChallengeSubmissionVotesBySubmissionId(
     submissionId: number,
   ): Promise<ChallengeSubmissionVoteDto[]>

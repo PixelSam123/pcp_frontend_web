@@ -46,8 +46,8 @@ class RealPcpService implements PcpService {
     return await fetchJson(`${this.baseUrl}/session`)
   }
 
-  async createUser(userToCreate: UserCreateDto): Promise<UserBriefDto> {
-    return await fetchJson(`${this.baseUrl}/users`, {
+  async createUser(userToCreate: UserCreateDto): Promise<void> {
+    await fetchVoid(`${this.baseUrl}/users`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -64,10 +64,8 @@ class RealPcpService implements PcpService {
     return await fetchJson(`${this.baseUrl}/users/${name}`)
   }
 
-  async createChallenge(
-    challengeToCreate: ChallengeCreateDto,
-  ): Promise<ChallengeDto> {
-    return await fetchJson(`${this.baseUrl}/challenges`, {
+  async createChallenge(challengeToCreate: ChallengeCreateDto): Promise<void> {
+    await fetchVoid(`${this.baseUrl}/challenges`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -86,8 +84,8 @@ class RealPcpService implements PcpService {
 
   async createChallengeComment(
     challengeCommentToCreate: ChallengeCommentCreateDto,
-  ): Promise<ChallengeCommentDto> {
-    return await fetchJson(`${this.baseUrl}/challenge_comments`, {
+  ): Promise<void> {
+    await fetchVoid(`${this.baseUrl}/challenge_comments`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -106,8 +104,8 @@ class RealPcpService implements PcpService {
 
   async createChallengeVote(
     challengeVoteToCreate: ChallengeVoteCreateDto,
-  ): Promise<ChallengeVoteDto> {
-    return await fetchJson(`${this.baseUrl}/challenge_votes`, {
+  ): Promise<void> {
+    await fetchVoid(`${this.baseUrl}/challenge_votes`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -130,8 +128,8 @@ class RealPcpService implements PcpService {
 
   async createChallengeSubmission(
     challengeSubmissionToCreate: ChallengeSubmissionCreateDto,
-  ): Promise<ChallengeSubmissionDto> {
-    return await fetchJson(`${this.baseUrl}/challenge_submissions`, {
+  ): Promise<void> {
+    await fetchVoid(`${this.baseUrl}/challenge_submissions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -150,8 +148,8 @@ class RealPcpService implements PcpService {
 
   async createChallengeSubmissionComment(
     challengeSubmissionCommentToCreate: ChallengeSubmissionCommentCreateDto,
-  ): Promise<ChallengeSubmissionCommentDto> {
-    return await fetchJson(`${this.baseUrl}/challenge_submission_comments`, {
+  ): Promise<void> {
+    await fetchVoid(`${this.baseUrl}/challenge_submission_comments`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -170,8 +168,8 @@ class RealPcpService implements PcpService {
 
   async createChallengeSubmissionVote(
     challengeSubmissionVoteToCreate: ChallengeSubmissionVoteCreateDto,
-  ): Promise<ChallengeSubmissionVoteDto> {
-    return await fetchJson(`${this.baseUrl}/challenge_submission_votes`, {
+  ): Promise<void> {
+    await fetchVoid(`${this.baseUrl}/challenge_submission_votes`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
