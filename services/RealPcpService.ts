@@ -27,7 +27,7 @@ class RealPcpService implements PcpService {
   }
 
   async sessionLogin(username: string, password: string): Promise<void> {
-    await fetchVoid(`${this.baseUrl}/session/login`, {
+    await fetchVoid(`${this.baseUrl}/token`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
