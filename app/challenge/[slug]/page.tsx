@@ -15,6 +15,9 @@ export default function Challenge({ params }: { params: { slug: string } }) {
 
   const [code, setCode] = useState('')
 
+  const [submitError, setSubmitError] = useState('')
+  const [isSubmitSuccess, setIsSubmitSuccess] = useState(false)
+
   const {
     data: commentsData,
     error: commentsError,
@@ -51,6 +54,21 @@ export default function Challenge({ params }: { params: { slug: string } }) {
     return <p>Loading...</p>
   }
 
+  const submitAttempt = async () => {
+    setSubmitError('')
+    setIsSubmitSuccess(false)
+
+    try {
+      await pcpService.createChallengeSubmission({
+        challengeId: challenge.id,
+        code: code
+      })
+      setIsSubmitSuccess(true)
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : 'Unknown error')
+    }
+  }
+
   return (
     <div className="space-y-3">
       <ChallengeHeader tier={challenge.tier} title={challenge.name} />
@@ -73,13 +91,15 @@ export default function Challenge({ params }: { params: { slug: string } }) {
             <p>Error fetching submissions</p>
             <p className="text-xs">{submissionsError.toString()}</p>
           </>
-        ) : (
+        ) : submissionsData?.length ? (
           submissionsData?.map((submission) => (
             <div key={submission.id} className="the-card space-y-3">
               <p className="font-bold">{submission.user.name}</p>
               <p>{submission.code}</p>
             </div>
           ))
+        ) : (
+          <p>There are no submissions</p>
         )}
       </TheDialog>
 
@@ -92,12 +112,31 @@ export default function Challenge({ params }: { params: { slug: string } }) {
       <div className="the-card space-y-3">
         <p className="font-bold">Editor</p>
         <Editor
-          height="28rem"
+          height="24rem"
           defaultLanguage="javascript"
           value={code}
           onChange={(value) => setCode(value ?? '')}
           theme="vs-dark"
         />
+
+        <button onClick={submitAttempt} className="the-btn w-full">
+          Submit Attempt
+        </button>
+
+        {submitError ? (
+          <div className="bg-red-800 px-3 py-1">
+            <p>{submitError}</p>
+          </div>
+        ) : (
+          ''
+        )}
+        {isSubmitSuccess ? (
+          <div className="bg-green-500 px-3 py-1">
+            <p>Success</p>
+          </div>
+        ) : (
+          ''
+        )}
       </div>
 
       <div className="the-card space-y-3">
@@ -113,13 +152,15 @@ export default function Challenge({ params }: { params: { slug: string } }) {
             <p>Error fetching comments</p>
             <p className="text-xs">{commentsError.toString()}</p>
           </>
-        ) : (
+        ) : commentsData?.length ? (
           commentsData?.map((comment) => (
             <div key={comment.id} className="the-card space-y-3">
               <p className="font-bold">{comment.user.name}</p>
               <p>{comment.content}</p>
             </div>
           ))
+        ) : (
+          <p>There are no comments</p>
         )}
       </div>
     </div>
