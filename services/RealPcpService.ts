@@ -33,6 +33,7 @@ class RealPcpService implements PcpService {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: new URLSearchParams({ username, password }),
+      credentials: 'include'
     })
   }
 
@@ -43,7 +44,9 @@ class RealPcpService implements PcpService {
   }
 
   async sessionGet(): Promise<Session> {
-    return await fetchJson(`${this.baseUrl}/session`)
+    return await fetchJson(`${this.baseUrl}/session`, {
+      credentials: 'include'
+    })
   }
 
   async createUser(userToCreate: UserCreateDto): Promise<void> {
