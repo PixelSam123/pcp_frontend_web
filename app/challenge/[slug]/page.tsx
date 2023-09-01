@@ -61,7 +61,7 @@ export default function Challenge({ params }: { params: { slug: string } }) {
     try {
       await pcpService.createChallengeSubmission({
         challengeId: challenge.id,
-        code: code
+        code: code,
       })
       setIsSubmitSuccess(true)
     } catch (err) {

@@ -12,6 +12,7 @@ export default function Create() {
   const [description, setDescription] = useState('')
   const [initialCode, setInitialCode] = useState('')
   const [testCases, setTestCases] = useState('')
+  const [codeForVerification, setCodeForVerification] = useState('')
 
   const [error, setError] = useState('')
   const [isSuccess, setIsSuccess] = useState(false)
@@ -37,6 +38,7 @@ export default function Create() {
         description,
         initialCode,
         testCase: testCases,
+        codeForVerification,
       })
       setIsSuccess(true)
     } catch (err) {
@@ -62,7 +64,7 @@ export default function Create() {
       >
         {error ? (
           <div className="bg-red-800 px-3 py-1">
-            <p>{error}</p>
+            <p className="whitespace-pre-wrap text-sm">{error}</p>
           </div>
         ) : (
           ''
@@ -134,6 +136,19 @@ export default function Create() {
           options={{ minimap: { enabled: false } }}
           value={testCases}
           onChange={(value) => setTestCases(value ?? '')}
+        />
+
+        <p className="block font-bold">
+          Code for Verification (that you can do the problem)
+        </p>
+        <Editor
+          width="100%"
+          height="8rem"
+          defaultLanguage="javascript"
+          theme="vs-dark"
+          options={{ minimap: { enabled: false } }}
+          value={codeForVerification}
+          onChange={(value) => setCodeForVerification(value ?? '')}
         />
 
         <button

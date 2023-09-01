@@ -19,6 +19,7 @@ type ChallengeCreateDto = {
   description: string
   initialCode: string
   testCase: string
+  codeForVerification: string
 }
 
 type ChallengeDto = {

@@ -30,7 +30,7 @@ export default function TheDialog({
       )}
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 bg-black/50" />
-        <Dialog.Content className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#1e1e1e]">
+        <Dialog.Content className="fixed left-1/2 top-1/2 max-h-screen -translate-x-1/2 -translate-y-1/2 overflow-y-scroll bg-[#1e1e1e]">
           <div className="the-card space-y-3">
             <Dialog.Title className="font-bold">{title}</Dialog.Title>
             <Dialog.Description>{description}</Dialog.Description>
