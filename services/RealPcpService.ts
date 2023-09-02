@@ -40,6 +40,7 @@ class RealPcpService implements PcpService {
   async sessionLogout(): Promise<void> {
     await fetchVoid(`${this.baseUrl}/session/logout`, {
       method: 'POST',
+      credentials: 'include',
     })
   }
 

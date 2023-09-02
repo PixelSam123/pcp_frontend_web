@@ -36,6 +36,23 @@ export default function ProfileButton() {
     }
   }
 
+  const [isSignOutOpen, setIsSignOutOpen] = useState(false)
+
+  const [signOutError, setSignOutError] = useState('')
+  const [isSignOutSuccess, setIsSignOutSuccess] = useState(false)
+
+  const signOut = async () => {
+    setSignOutError('')
+    setIsSignOutSuccess(false)
+
+    try {
+      await pcpService.sessionLogout()
+      setIsSignOutSuccess(true)
+    } catch (err) {
+      setSignOutError(err instanceof Error ? err.message : 'Unknown error')
+    }
+  }
+
   return (
     <>
       <DropdownMenu.Root>
@@ -69,6 +86,14 @@ export default function ProfileButton() {
                 className="the-btn block w-full"
               >
                 Sign In
+              </button>
+            </DropdownMenu.Item>
+            <DropdownMenu.Item>
+              <button
+                onClick={() => setIsSignOutOpen(true)}
+                className="the-btn block w-full"
+              >
+                Sign Out
               </button>
             </DropdownMenu.Item>
           </DropdownMenu.Content>
@@ -127,6 +152,35 @@ export default function ProfileButton() {
           <p>Don&apos;t have an account?</p>
           <SignUpDialog />
         </form>
+      </TheDialog>
+
+      <TheDialog
+        noTrigger
+        open={isSignOutOpen}
+        onOpenChange={setIsSignOutOpen}
+        title="Sign Out"
+        description="Sign out of your account. Are you sure?"
+      >
+        {signOutError ? (
+          <div className="bg-red-800 px-3 py-1">
+            <p>{signOutError}</p>
+          </div>
+        ) : (
+          ''
+        )}
+        {isSignOutSuccess ? (
+          <div className="bg-green-500 px-3 py-1">
+            <p>Success</p>
+          </div>
+        ) : (
+          ''
+        )}
+        <button onClick={signOut} className="the-btn mr-3">
+          Yes
+        </button>
+        <button onClick={() => setIsSignOutOpen(false)} className="the-btn">
+          No
+        </button>
       </TheDialog>
     </>
   )
