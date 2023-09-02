@@ -27,7 +27,7 @@ interface PcpService {
   getUserByName(name: string): Promise<UserBriefDto>
 
   createChallenge(challengeToCreate: ChallengeCreateDto): Promise<void>
-  getChallenges(): Promise<ChallengeBriefDto[]>
+  getChallenges(tiers: string[], sortBy: string): Promise<ChallengeBriefDto[]>
   getChallengeByName(name: string): Promise<ChallengeDto>
 
   createChallengeComment(

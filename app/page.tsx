@@ -19,6 +19,8 @@ export default function Home() {
   const tiers = ['5', '4', '3', '2', '1']
   const [selectedTiers, setSelectedTiers] = useState<string[]>(tiers)
 
+  const [sortBy, setSortBy] = useState('newest')
+
   const {
     data: usersData,
     error: usersError,
@@ -29,7 +31,9 @@ export default function Home() {
     data: challengesData,
     error: challengesError,
     isLoading: challengesIsLoading,
-  } = useSWR('challenges', () => pcpService.getChallenges())
+  } = useSWR(`challenges?tiers=${selectedTiers}&sortBy=${sortBy}`, () =>
+    pcpService.getChallenges(selectedTiers, sortBy),
+  )
 
   return (
     <>
@@ -117,12 +121,13 @@ export default function Home() {
 
             <p>Sort By</p>
             <TheSelect
-              defaultValue="newest"
+              value={sortBy}
+              onValueChange={(value) => setSortBy(value)}
               options={[
                 { text: 'Newest', value: 'newest' },
                 { text: 'Oldest', value: 'oldest' },
-                { text: 'Most Completed', value: 'most-completed' },
-                { text: 'Least Completed', value: 'least-completed' },
+                { text: 'Most Completed', value: 'mostCompleted' },
+                { text: 'Least Completed', value: 'leastCompleted' },
               ]}
               className="w-full"
             />

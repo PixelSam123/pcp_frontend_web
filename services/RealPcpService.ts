@@ -78,8 +78,13 @@ class RealPcpService implements PcpService {
     })
   }
 
-  async getChallenges(): Promise<ChallengeBriefDto[]> {
-    return await fetchJson(`${this.baseUrl}/challenges`)
+  async getChallenges(
+    tiers: string[],
+    sortBy: string,
+  ): Promise<ChallengeBriefDto[]> {
+    return await fetchJson(
+      `${this.baseUrl}/challenges?tiers=${tiers}&sortBy=${sortBy}`,
+    )
   }
 
   async getChallengeByName(name: string): Promise<ChallengeDto> {

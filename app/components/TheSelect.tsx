@@ -4,16 +4,18 @@ import { IconCheck, IconSelect } from '@tabler/icons-react'
 import * as Select from '@radix-ui/react-select'
 
 export default function TheSelect({
-  defaultValue,
+  value,
+  onValueChange,
   options,
   className,
 }: {
-  defaultValue: string
+  value: string
+  onValueChange: Select.SelectProps['onValueChange']
   options: { text: string; value: string }[]
   className?: string
 }) {
   return (
-    <Select.Root defaultValue={defaultValue}>
+    <Select.Root value={value} onValueChange={onValueChange}>
       <Select.Trigger
         className={`the-btn group flex items-center justify-between gap-x-3 ${
           className ?? ''
