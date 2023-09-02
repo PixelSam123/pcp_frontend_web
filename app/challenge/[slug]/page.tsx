@@ -72,41 +72,37 @@ export default function Challenge({ params }: { params: { slug: string } }) {
   return (
     <div className="space-y-3">
       <ChallengeHeader tier={challenge.tier} title={challenge.name} />
-      <TheSelect
-        defaultValue="javascript"
-        options={[{ text: 'javascript', value: 'javascript' }]}
-      />
-
-      <TheDialog
-        title="View Submissions"
-        description="Here are the submissions for this challenge"
-      >
-        {submissionsIsLoading ? (
-          <>
-            <p>Loading...</p>
-            <p className="text-xs">Please wait</p>
-          </>
-        ) : submissionsError ? (
-          <>
-            <p>Error fetching submissions</p>
-            <p className="text-xs">{submissionsError.toString()}</p>
-          </>
-        ) : submissionsData?.length ? (
-          submissionsData?.map((submission) => (
-            <div key={submission.id} className="the-card space-y-3">
-              <p className="font-bold">{submission.user.name}</p>
-              <p>{submission.code}</p>
-            </div>
-          ))
-        ) : (
-          <p>There are no submissions</p>
-        )}
-      </TheDialog>
 
       <div className="the-card space-y-3">
         <p className="font-bold">Description</p>
 
         <p>{challenge.description}</p>
+
+        <TheDialog
+          title="View Submissions"
+          description="Here are the submissions for this challenge"
+        >
+          {submissionsIsLoading ? (
+            <>
+              <p>Loading...</p>
+              <p className="text-xs">Please wait</p>
+            </>
+          ) : submissionsError ? (
+            <>
+              <p>Error fetching submissions</p>
+              <p className="text-xs">{submissionsError.toString()}</p>
+            </>
+          ) : submissionsData?.length ? (
+            submissionsData?.map((submission) => (
+              <div key={submission.id} className="the-card space-y-3">
+                <p className="font-bold">{submission.user.name}</p>
+                <p>{submission.code}</p>
+              </div>
+            ))
+          ) : (
+            <p>There are no submissions</p>
+          )}
+        </TheDialog>
       </div>
 
       <div className="the-card space-y-3">
