@@ -101,6 +101,7 @@ class RealPcpService implements PcpService {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(challengeCommentToCreate),
+      credentials: 'include',
     })
   }
 
