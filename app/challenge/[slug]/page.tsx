@@ -2,7 +2,6 @@
 
 import Editor from '@monaco-editor/react'
 import ChallengeHeader from '@/app/components/ChallengeHeader'
-import TheSelect from '@/app/components/TheSelect'
 import { FormEvent, useEffect, useState } from 'react'
 import { pcpService } from '@/services/RealPcpService'
 import { ChallengeDto } from '@/types/types'
@@ -145,7 +144,7 @@ export default function Challenge({ params }: { params: { slug: string } }) {
               <p className="text-xs">{submissionsError.toString()}</p>
             </>
           ) : submissionsData?.length ? (
-            submissionsData?.map((submission) => (
+            submissionsData.map((submission) => (
               <div key={submission.id} className="the-card space-y-3">
                 <p className="font-bold">{submission.user.name}</p>
                 <p>{submission.code}</p>
@@ -180,7 +179,7 @@ export default function Challenge({ params }: { params: { slug: string } }) {
 
         {submitError ? (
           <div className="bg-red-800 px-3 py-1">
-            <p>{submitError}</p>
+            <p className="whitespace-pre-wrap text-sm">{submitError}</p>
           </div>
         ) : (
           ''
@@ -236,7 +235,7 @@ export default function Challenge({ params }: { params: { slug: string } }) {
             <p className="text-xs">{commentsError.toString()}</p>
           </>
         ) : commentsData?.length ? (
-          commentsData?.map((comment) => (
+          commentsData.map((comment) => (
             <div key={comment.id} className="the-card space-y-3">
               <p className="font-bold">{comment.user.name}</p>
               <p>{comment.content}</p>

@@ -145,7 +145,7 @@ export default function Home() {
             <p className="text-xs">{challengesError.toString()}</p>
           </div>
         ) : challengesData?.length ? (
-          challengesData?.map((challenge) => (
+          challengesData.map((challenge) => (
             <div key={challenge.name} className="the-card space-y-3">
               <ChallengeHeader tier={challenge.tier} title={challenge.name} />
 

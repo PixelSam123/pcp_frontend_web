@@ -13,7 +13,7 @@ export default function ProfileButton() {
     data: sessionData,
     error: sessionError,
     isLoading: sessionIsLoading,
-  } = useSWR('session', () => pcpService.sessionGet())
+  } = useSWR('session', () => pcpService.sessionUser())
 
   const [isSignInOpen, setIsSignInOpen] = useState(false)
 
@@ -70,8 +70,8 @@ export default function ProfileButton() {
               </>
             ) : (
               <>
-                <p>{sessionData?.userInfo.name}</p>
-                <p className="text-xs">{sessionData?.userInfo.points} pts</p>
+                <p>{sessionData?.name}</p>
+                <p className="text-xs">{sessionData?.points} pts</p>
               </>
             )}
           </div>

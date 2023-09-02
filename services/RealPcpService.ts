@@ -15,7 +15,6 @@ import {
   ChallengeSubmissionCommentDto,
   ChallengeSubmissionVoteCreateDto,
   ChallengeSubmissionVoteDto,
-  Session,
 } from '@/types/types'
 import { fetchJson, fetchVoid } from '@/utils/utils'
 
@@ -44,8 +43,14 @@ class RealPcpService implements PcpService {
     })
   }
 
-  async sessionGet(): Promise<Session> {
+  async sessionUser(): Promise<UserBriefDto> {
     return await fetchJson(`${this.baseUrl}/session`, {
+      credentials: 'include',
+    })
+  }
+
+  async sessionChallenges(): Promise<ChallengeBriefDto[]> {
+    return await fetchJson(`${this.baseUrl}/session/challenges`, {
       credentials: 'include',
     })
   }
