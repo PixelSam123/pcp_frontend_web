@@ -1,3 +1,15 @@
+# pcp_frontend_web
+
+Pixel Code Platform web frontend
+
+## Status
+
+Currently missing challenge editing & deletion, voting and submission comments.
+
+Original README from Next.js below.
+
+---
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
