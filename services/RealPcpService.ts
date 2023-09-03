@@ -55,6 +55,28 @@ class RealPcpService implements PcpService {
     })
   }
 
+  async sessionChallengeIsUpvoteByChallengeId(
+    challengeId: number,
+  ): Promise<boolean | null> {
+    return await fetchJson(
+      `${this.baseUrl}/session/challenge_votes/${challengeId}`,
+      {
+        credentials: 'include',
+      },
+    )
+  }
+
+  async sessionChallengeSubmissionIsUpvoteByChallengeSubmissionId(
+    challengeSubmissionId: number,
+  ): Promise<boolean | null> {
+    return await fetchJson(
+      `${this.baseUrl}/session/challenge_submission_votes/${challengeSubmissionId}`,
+      {
+        credentials: 'include',
+      },
+    )
+  }
+
   async createUser(userToCreate: UserCreateDto): Promise<void> {
     await fetchVoid(`${this.baseUrl}/users`, {
       method: 'POST',

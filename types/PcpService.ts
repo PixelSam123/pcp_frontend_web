@@ -21,6 +21,12 @@ interface PcpService {
   sessionLogout(): Promise<void>
   sessionUser(): Promise<UserBriefDto>
   sessionChallenges(): Promise<ChallengeBriefDto[]>
+  sessionChallengeIsUpvoteByChallengeId(
+    challengeId: number,
+  ): Promise<boolean | null>
+  sessionChallengeSubmissionIsUpvoteByChallengeSubmissionId(
+    challengeSubmissionId: number,
+  ): Promise<boolean | null>
 
   createUser(userToCreate: UserCreateDto): Promise<void>
   getUsers(): Promise<UserBriefDto[]>
