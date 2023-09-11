@@ -23,7 +23,7 @@ export default function SignUpDialog() {
     }
 
     try {
-      await pcpService.createUser({ name: username, password })
+      await pcpService.userCreate({ name: username, password })
       setIsSuccess(true)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error')

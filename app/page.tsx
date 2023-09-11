@@ -25,14 +25,14 @@ export default function Home() {
     data: usersData,
     error: usersError,
     isLoading: usersIsLoading,
-  } = useSWR('users', () => pcpService.getUsers())
+  } = useSWR('users', () => pcpService.userList())
 
   const {
     data: challengesData,
     error: challengesError,
     isLoading: challengesIsLoading,
   } = useSWR(`challenges?tiers=${selectedTiers}&sortBy=${sortBy}`, () =>
-    pcpService.getChallenges(selectedTiers, sortBy),
+    pcpService.challengeList(selectedTiers, sortBy),
   )
 
   return (

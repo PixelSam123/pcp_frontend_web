@@ -33,7 +33,7 @@ export default function Create() {
         throw new Error('Tier must be between 1 and 5')
       }
 
-      await pcpService.createChallenge({
+      await pcpService.challengeCreate({
         name: title,
         tier: parsedTier,
         description,

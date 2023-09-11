@@ -28,7 +28,7 @@ export default function Challenge({ params }: { params: { slug: string } }) {
     error: commentsError,
     isLoading: commentsIsLoading,
   } = useSWR(`challenges/${params.slug}`, () =>
-    pcpService.getChallengeCommentsByChallengeName(params.slug),
+    pcpService.challengeCommentListByChallengeName(params.slug),
   )
 
   const {
@@ -36,7 +36,7 @@ export default function Challenge({ params }: { params: { slug: string } }) {
     error: submissionsError,
     isLoading: submissionsIsLoading,
   } = useSWR(`challenge_submissions/${params.slug}`, () =>
-    pcpService.getChallengeSubmissionsByChallengeName(params.slug),
+    pcpService.challengeSubmissionListByChallengeName(params.slug),
   )
 
   const {
@@ -44,13 +44,13 @@ export default function Challenge({ params }: { params: { slug: string } }) {
     error: votesError,
     isLoading: votesIsLoading,
   } = useSWR(`challenge_votes/${params.slug}`, () =>
-    pcpService.getChallengeVotesByChallengeName(params.slug),
+    pcpService.challengeVoteListByChallengeName(params.slug),
   )
 
   useEffect(() => {
     ;(async () => {
       try {
-        const challenge = await pcpService.getChallengeByName(params.slug)
+        const challenge = await pcpService.challengeGetByName(params.slug)
         setChallenge(challenge)
         setCode(challenge.initialCode)
       } catch (err) {
@@ -72,7 +72,7 @@ export default function Challenge({ params }: { params: { slug: string } }) {
     setIsSubmitSuccess(false)
 
     try {
-      await pcpService.createChallengeSubmission({
+      await pcpService.challengeSubmissionCreate({
         challengeId: challenge.id,
         code: code,
       })
@@ -88,7 +88,7 @@ export default function Challenge({ params }: { params: { slug: string } }) {
     setIsCommentSuccess(false)
 
     try {
-      await pcpService.createChallengeComment({
+      await pcpService.challengeCommentCreate({
         challengeId: challenge.id,
         content: commentToPost,
       })

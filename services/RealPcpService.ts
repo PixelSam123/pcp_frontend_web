@@ -19,11 +19,7 @@ import {
 import { fetchJson, fetchVoid } from '@/utils/utils'
 
 class RealPcpService implements PcpService {
-  private readonly baseUrl: string
-
-  constructor(baseUrl: string) {
-    this.baseUrl = baseUrl
-  }
+  constructor(private readonly baseUrl: string) {}
 
   async sessionLogin(username: string, password: string): Promise<void> {
     await fetchVoid(`${this.baseUrl}/token`, {
@@ -77,7 +73,7 @@ class RealPcpService implements PcpService {
     )
   }
 
-  async createUser(userToCreate: UserCreateDto): Promise<void> {
+  async userCreate(userToCreate: UserCreateDto): Promise<void> {
     await fetchVoid(`${this.baseUrl}/users`, {
       method: 'POST',
       headers: {
@@ -87,15 +83,15 @@ class RealPcpService implements PcpService {
     })
   }
 
-  async getUsers(): Promise<UserBriefDto[]> {
+  async userList(): Promise<UserBriefDto[]> {
     return await fetchJson(`${this.baseUrl}/users`)
   }
 
-  async getUserByName(name: string): Promise<UserBriefDto> {
+  async userGetByName(name: string): Promise<UserBriefDto> {
     return await fetchJson(`${this.baseUrl}/users/${name}`)
   }
 
-  async createChallenge(challengeToCreate: ChallengeCreateDto): Promise<void> {
+  async challengeCreate(challengeToCreate: ChallengeCreateDto): Promise<void> {
     await fetchVoid(`${this.baseUrl}/challenges`, {
       method: 'POST',
       headers: {
@@ -106,7 +102,7 @@ class RealPcpService implements PcpService {
     })
   }
 
-  async getChallenges(
+  async challengeList(
     tiers: string[],
     sortBy: string,
   ): Promise<ChallengeBriefDto[]> {
@@ -115,11 +111,11 @@ class RealPcpService implements PcpService {
     )
   }
 
-  async getChallengeByName(name: string): Promise<ChallengeDto> {
+  async challengeGetByName(name: string): Promise<ChallengeDto> {
     return await fetchJson(`${this.baseUrl}/challenges/${name}`)
   }
 
-  async createChallengeComment(
+  async challengeCommentCreate(
     challengeCommentToCreate: ChallengeCommentCreateDto,
   ): Promise<void> {
     await fetchVoid(`${this.baseUrl}/challenge_comments`, {
@@ -132,7 +128,7 @@ class RealPcpService implements PcpService {
     })
   }
 
-  async getChallengeCommentsByChallengeName(
+  async challengeCommentListByChallengeName(
     challengeName: string,
   ): Promise<ChallengeCommentDto[]> {
     return await fetchJson(
@@ -140,7 +136,7 @@ class RealPcpService implements PcpService {
     )
   }
 
-  async createChallengeVote(
+  async challengeVoteCreate(
     challengeVoteToCreate: ChallengeVoteCreateDto,
   ): Promise<void> {
     await fetchVoid(`${this.baseUrl}/challenge_votes`, {
@@ -149,22 +145,24 @@ class RealPcpService implements PcpService {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(challengeVoteToCreate),
+      credentials: 'include',
     })
   }
 
-  async getChallengeVotesByChallengeName(
+  async challengeVoteListByChallengeName(
     challengeName: string,
   ): Promise<ChallengeVoteDto[]> {
     return await fetchJson(`${this.baseUrl}/challenge_votes/${challengeName}`)
   }
 
-  async deleteChallengeVote(id: number): Promise<void> {
+  async challengeVoteDelete(id: number): Promise<void> {
     return await fetchJson(`${this.baseUrl}/challenge_votes/${id}`, {
       method: 'DELETE',
+      credentials: 'include',
     })
   }
 
-  async createChallengeSubmission(
+  async challengeSubmissionCreate(
     challengeSubmissionToCreate: ChallengeSubmissionCreateDto,
   ): Promise<void> {
     await fetchVoid(`${this.baseUrl}/challenge_submissions`, {
@@ -177,7 +175,7 @@ class RealPcpService implements PcpService {
     })
   }
 
-  async getChallengeSubmissionsByChallengeName(
+  async challengeSubmissionListByChallengeName(
     challengeName: string,
   ): Promise<ChallengeSubmissionDto[]> {
     return await fetchJson(
@@ -185,7 +183,7 @@ class RealPcpService implements PcpService {
     )
   }
 
-  async createChallengeSubmissionComment(
+  async challengeSubmissionCommentCreate(
     challengeSubmissionCommentToCreate: ChallengeSubmissionCommentCreateDto,
   ): Promise<void> {
     await fetchVoid(`${this.baseUrl}/challenge_submission_comments`, {
@@ -194,10 +192,11 @@ class RealPcpService implements PcpService {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(challengeSubmissionCommentToCreate),
+      credentials: 'include',
     })
   }
 
-  async getChallengeSubmissionCommentsByChallengeSubmissionId(
+  async challengeSubmissionCommentListByChallengeSubmissionId(
     challengeSubmissionId: number,
   ): Promise<ChallengeSubmissionCommentDto[]> {
     return await fetchJson(
@@ -205,7 +204,7 @@ class RealPcpService implements PcpService {
     )
   }
 
-  async createChallengeSubmissionVote(
+  async challengeSubmissionVoteCreate(
     challengeSubmissionVoteToCreate: ChallengeSubmissionVoteCreateDto,
   ): Promise<void> {
     await fetchVoid(`${this.baseUrl}/challenge_submission_votes`, {
@@ -214,10 +213,11 @@ class RealPcpService implements PcpService {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(challengeSubmissionVoteToCreate),
+      credentials: 'include',
     })
   }
 
-  async getChallengeSubmissionVotesBySubmissionId(
+  async challengeSubmissionVoteListBySubmissionId(
     submissionId: number,
   ): Promise<ChallengeSubmissionVoteDto[]> {
     return await fetchJson(
@@ -225,9 +225,10 @@ class RealPcpService implements PcpService {
     )
   }
 
-  async deleteSubmissionVote(id: number): Promise<void> {
+  async submissionVoteDelete(id: number): Promise<void> {
     return await fetchJson(`${this.baseUrl}/challenge_votes/${id}`, {
       method: 'DELETE',
+      credentials: 'include',
     })
   }
 }
