@@ -2,18 +2,12 @@
 
 import { pcpService } from '@/services/RealPcpService'
 import * as Checkbox from '@radix-ui/react-checkbox'
-import {
-  IconTargetArrow,
-  IconThumbDown,
-  IconThumbUp,
-  IconUser,
-} from '@tabler/icons-react'
-import Link from 'next/link'
 import { useState } from 'react'
 import useSWR from 'swr'
-import ChallengeHeader from './components/ChallengeHeader'
 import TheDialog from './components/TheDialog'
 import TheSelect from './components/TheSelect'
+import UsersDisplay from './components/display/UsersDisplay'
+import ChallengesDisplay from './components/display/ChallengesDisplay'
 
 export default function Home() {
   const tiers = ['5', '4', '3', '2', '1']
@@ -51,26 +45,10 @@ export default function Home() {
             <p className="text-xs">{usersError.toString()}</p>
           </div>
         ) : (
-          <table className="border-collapse border border-white">
-            <thead>
-              <tr>
-                <th className="border border-white px-3 py-1">Name</th>
-                <th className="border border-white px-3 py-1">Points</th>
-              </tr>
-            </thead>
-            <tbody>
-              {usersData?.map((user) => (
-                <tr key={user.id}>
-                  <td className="border border-white px-3 py-1">{user.name}</td>
-                  <td className="border border-white px-3 py-1">
-                    {user.points}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <UsersDisplay users={usersData ?? []} />
         )}
       </div>
+
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         <div className="the-card">
           <div className="mx-auto max-w-sm space-y-3">
@@ -144,45 +122,8 @@ export default function Home() {
             <p>Error</p>
             <p className="text-xs">{challengesError.toString()}</p>
           </div>
-        ) : challengesData?.length ? (
-          challengesData.map((challenge) => (
-            <div key={challenge.name} className="the-card space-y-3">
-              <ChallengeHeader tier={challenge.tier} title={challenge.name} />
-
-              <div className="flex flex-wrap gap-x-3 gap-y-1 text-sm">
-                <p>
-                  <IconUser size="20" className="inline-block" />{' '}
-                  {challenge.user.name}
-                </p>
-                <p>
-                  <IconThumbUp size="20" className="inline-block" /> 0
-                </p>
-                <p>
-                  <IconThumbDown size="20" className="inline-block" /> 0
-                </p>
-                <p>
-                  <IconTargetArrow size="20" className="inline-block" />{' '}
-                  {challenge.completedCount}
-                </p>
-              </div>
-
-              <div>
-                <p>Available in:</p>
-                <div className="flex gap-3">
-                  <Link
-                    href={`/challenge/${challenge.name}`}
-                    className="underline hover:text-sky-400"
-                  >
-                    javascript
-                  </Link>
-                </div>
-              </div>
-            </div>
-          ))
         ) : (
-          <div>
-            <p>No challenges found for your current filter</p>
-          </div>
+          <ChallengesDisplay challenges={challengesData ?? []} />
         )}
       </div>
     </>
