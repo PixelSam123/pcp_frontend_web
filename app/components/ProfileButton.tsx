@@ -1,12 +1,15 @@
 'use client'
 
 import { pcpService } from '@/services/RealPcpService'
+import * as Dialog from '@radix-ui/react-dialog'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import { IconSelect } from '@tabler/icons-react'
-import { FormEvent, useState } from 'react'
+import { useState } from 'react'
 import useSWR from 'swr'
-import SignUpDialog from './SignUpDialog'
-import TheDialog from './TheDialog'
+import TheDialogPortal from './TheDialogPortal'
+import SignUpForm from './forms/SignUpForm'
+import SignInForm from './forms/SignInForm'
+import SignOutForm from './forms/SignOutForm'
 
 export default function ProfileButton() {
   const {
@@ -16,42 +19,8 @@ export default function ProfileButton() {
   } = useSWR('session', () => pcpService.sessionUser())
 
   const [isSignInOpen, setIsSignInOpen] = useState(false)
-
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-
-  const [error, setError] = useState('')
-  const [isSuccess, setIsSuccess] = useState(false)
-
-  const signIn = async (evt: FormEvent<HTMLFormElement>) => {
-    evt.preventDefault()
-    setError('')
-    setIsSuccess(false)
-
-    try {
-      await pcpService.sessionLogin(username, password)
-      setIsSuccess(true)
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unknown error')
-    }
-  }
-
   const [isSignOutOpen, setIsSignOutOpen] = useState(false)
-
-  const [signOutError, setSignOutError] = useState('')
-  const [isSignOutSuccess, setIsSignOutSuccess] = useState(false)
-
-  const signOut = async () => {
-    setSignOutError('')
-    setIsSignOutSuccess(false)
-
-    try {
-      await pcpService.sessionLogout()
-      setIsSignOutSuccess(true)
-    } catch (err) {
-      setSignOutError(err instanceof Error ? err.message : 'Unknown error')
-    }
-  }
+  const [isSignUpOpen, setIsSignUpOpen] = useState(false)
 
   return (
     <>
@@ -100,88 +69,34 @@ export default function ProfileButton() {
         </DropdownMenu.Portal>
       </DropdownMenu.Root>
 
-      <TheDialog
-        noTrigger
-        open={isSignInOpen}
-        onOpenChange={setIsSignInOpen}
-        title="Sign In"
-        description="Sign in to your account."
-      >
-        <form onSubmit={signIn} className="flex flex-col gap-3">
-          {error ? (
-            <div className="bg-red-800 px-3 py-1">
-              <p>{error}</p>
-            </div>
-          ) : (
-            ''
-          )}
-          {isSuccess ? (
-            <div className="bg-green-500 px-3 py-1">
-              <p>Success</p>
-            </div>
-          ) : (
-            ''
-          )}
-
-          <label htmlFor="username">Username</label>
-          <input
-            required
-            id="username"
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(evt) => setUsername(evt.target.value)}
-            className="the-input"
-          />
-
-          <label htmlFor="password">Password</label>
-          <input
-            required
-            id="password"
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(evt) => setPassword(evt.target.value)}
-            className="the-input"
-          />
-
-          <button type="submit" className="the-btn">
-            Sign In
-          </button>
+      <Dialog.Root open={isSignInOpen} onOpenChange={setIsSignInOpen}>
+        <TheDialogPortal title="Sign In">
+          <SignInForm />
 
           <p>Don&apos;t have an account?</p>
-          <SignUpDialog />
-        </form>
-      </TheDialog>
+          <button
+            onClick={() => {
+              setIsSignInOpen(false)
+              setIsSignUpOpen(true)
+            }}
+            className="the-btn block w-full"
+          >
+            Sign Up
+          </button>
+        </TheDialogPortal>
+      </Dialog.Root>
 
-      <TheDialog
-        noTrigger
-        open={isSignOutOpen}
-        onOpenChange={setIsSignOutOpen}
-        title="Sign Out"
-        description="Sign out of your account. Are you sure?"
-      >
-        {signOutError ? (
-          <div className="bg-red-800 px-3 py-1">
-            <p>{signOutError}</p>
-          </div>
-        ) : (
-          ''
-        )}
-        {isSignOutSuccess ? (
-          <div className="bg-green-500 px-3 py-1">
-            <p>Success</p>
-          </div>
-        ) : (
-          ''
-        )}
-        <button onClick={signOut} className="the-btn mr-3">
-          Yes
-        </button>
-        <button onClick={() => setIsSignOutOpen(false)} className="the-btn">
-          No
-        </button>
-      </TheDialog>
+      <Dialog.Root open={isSignOutOpen} onOpenChange={setIsSignOutOpen}>
+        <TheDialogPortal title="Sign Out" description="Are you sure?">
+          <SignOutForm />
+        </TheDialogPortal>
+      </Dialog.Root>
+
+      <Dialog.Root open={isSignUpOpen} onOpenChange={setIsSignUpOpen}>
+        <TheDialogPortal title="Sign Up">
+          <SignUpForm />
+        </TheDialogPortal>
+      </Dialog.Root>
     </>
   )
 }

@@ -1,37 +1,37 @@
 async function fetchJson<T>(link: string, init?: RequestInit): Promise<T> {
   const res = await fetch(link, init)
+  const resJson = await res.json()
 
   if (!res.ok) {
-    throw new FetchError(res.status, res.statusText, await res.text())
+    throw new FetchError(res.status, res.statusText, resJson.details)
   }
 
-  return res.json()
+  return resJson
 }
 
 async function fetchString(link: string, init?: RequestInit) {
   const res = await fetch(link, init)
-  const resText = await res.text()
 
   if (!res.ok) {
-    throw new FetchError(res.status, res.statusText, resText)
+    throw new FetchError(res.status, res.statusText, (await res.json()).details)
   }
 
-  return resText
+  return await res.text()
 }
 
 async function fetchVoid(link: string, init?: RequestInit) {
   const res = await fetch(link, init)
 
   if (!res.ok) {
-    throw new FetchError(res.status, res.statusText, await res.text())
+    throw new FetchError(res.status, res.statusText, (await res.json()).details)
   }
 }
 
 class FetchError extends Error {
-  constructor(status: number, statusText: string, resText: string) {
+  constructor(status: number, statusText: string, details: string) {
     super(
-      `Network response not OK! ${status} ${statusText}: ${
-        resText || 'No details given'
+      `Error ${status} (${statusText})! Details: ${
+        details || 'No details given'
       }`,
     )
   }

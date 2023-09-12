@@ -1,6 +1,8 @@
+import * as Dialog from '@radix-ui/react-dialog'
+
 import { ChallengeBriefDto } from '@/types/types'
 import ChallengeHeader from '../ChallengeHeader'
-import TheDialog from '../TheDialog'
+import TheDialogPortal from '../TheDialogPortal'
 
 export default function SessionChallengesDisplay({
   challenges,
@@ -14,9 +16,13 @@ export default function SessionChallengesDisplay({
         className="flex w-fit items-center justify-between gap-6"
       >
         <ChallengeHeader tier={challenge.tier} title={challenge.name} />
-        <TheDialog normalWidth title="Edit" description="WIP Feature!">
-          <p>This feature is WIP</p>
-        </TheDialog>
+
+        <Dialog.Root>
+          <Dialog.Trigger className="the-btn block">Edit</Dialog.Trigger>
+          <TheDialogPortal title="Edit">
+            <p>This feature is WIP</p>
+          </TheDialogPortal>
+        </Dialog.Root>
       </div>
     ))
   ) : (

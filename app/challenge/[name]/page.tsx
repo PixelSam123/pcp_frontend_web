@@ -1,7 +1,7 @@
 'use client'
 
+import * as Dialog from '@radix-ui/react-dialog'
 import ChallengeHeader from '@/app/components/ChallengeHeader'
-import TheDialog from '@/app/components/TheDialog'
 import ChallengeCommentsDisplay from '@/app/components/display/ChallengeCommentsDisplay'
 import SubmissionsDisplay from '@/app/components/display/SubmissionsDisplay'
 import VotesDisplay from '@/app/components/display/VotesDisplay'
@@ -10,6 +10,7 @@ import { ChallengeDto } from '@/types/types'
 import Editor from '@monaco-editor/react'
 import { FormEvent, useEffect, useState } from 'react'
 import useSWR from 'swr'
+import TheDialogPortal from '@/app/components/TheDialogPortal'
 
 export default function Challenge({ params }: { params: { name: string } }) {
   const [challenge, setChallenge] = useState<ChallengeDto | null>(null)
@@ -123,24 +124,26 @@ export default function Challenge({ params }: { params: { name: string } }) {
 
         <p>{challenge.description}</p>
 
-        <TheDialog
-          title="View Submissions"
-          description="Here are the submissions for this challenge"
-        >
-          {submissionsIsLoading ? (
-            <>
-              <p>Loading...</p>
-              <p className="text-xs">Please wait</p>
-            </>
-          ) : submissionsError ? (
-            <>
-              <p>Error fetching submissions</p>
-              <p className="text-xs">{submissionsError.toString()}</p>
-            </>
-          ) : (
-            <SubmissionsDisplay submissions={submissionsData ?? []} />
-          )}
-        </TheDialog>
+        <Dialog.Root>
+          <Dialog.Trigger className="the-btn block w-full">
+            View Submissions
+          </Dialog.Trigger>
+          <TheDialogPortal title="View Submissions">
+            {submissionsIsLoading ? (
+              <>
+                <p>Loading...</p>
+                <p className="text-xs">Please wait</p>
+              </>
+            ) : submissionsError ? (
+              <>
+                <p>Error fetching submissions</p>
+                <p className="text-xs">{submissionsError.toString()}</p>
+              </>
+            ) : (
+              <SubmissionsDisplay submissions={submissionsData ?? []} />
+            )}
+          </TheDialogPortal>
+        </Dialog.Root>
       </div>
 
       <div className="the-card space-y-3">

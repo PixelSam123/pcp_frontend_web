@@ -1,11 +1,13 @@
 'use client'
 
+import * as Dialog from '@radix-ui/react-dialog'
 import { pcpService } from '@/services/RealPcpService'
 import { Editor } from '@monaco-editor/react'
 import { useState } from 'react'
 import useSWR from 'swr'
 import TheDialog from '../components/TheDialog'
 import SessionChallengesDisplay from '../components/display/SessionChallengesDisplay'
+import TheDialogPortal from '../components/TheDialogPortal'
 
 export default function Create() {
   const [title, setTitle] = useState('')
@@ -51,7 +53,7 @@ export default function Create() {
     data: sessionChallengesData,
     error: sessionChallengesError,
     isLoading: sessionChallengesIsLoading,
-  } = useSWR('session/challenges', pcpService.sessionChallenges)
+  } = useSWR('session/challenges', () => pcpService.sessionChallenges())
 
   return (
     <div className="space-y-3">
@@ -72,107 +74,112 @@ export default function Create() {
           <SessionChallengesDisplay challenges={sessionChallengesData ?? []} />
         )}
       </div>
-      <TheDialog
-        title="Create New Challenge"
-        description="Fill in new challenge details"
-      >
-        {error ? (
-          <div className="bg-red-800 px-3 py-1">
-            <p className="whitespace-pre-wrap text-sm">{error}</p>
-          </div>
-        ) : (
-          ''
-        )}
-        {isSuccess ? (
-          <div className="bg-green-500 px-3 py-1">
-            <p>Success</p>
-          </div>
-        ) : (
-          ''
-        )}
-
-        <label htmlFor="title" className="block font-bold">
-          Title
-        </label>
-        <input
-          type="text"
-          name="title"
-          id="title"
-          placeholder="Enter challenge title"
-          value={title}
-          onChange={(evt) => setTitle(evt.target.value)}
-          className="the-input w-full sm:w-[512px] md:w-[640px]"
-        />
-
-        <label htmlFor="tier" className="block font-bold">
-          Tier
-        </label>
-        <input
-          type="number"
-          name="tier"
-          id="tier"
-          placeholder="Enter challenge tier"
-          min={1}
-          max={5}
-          value={tier}
-          onChange={(evt) => setTier(evt.target.value)}
-          className="the-input w-full sm:w-[512px] md:w-[640px]"
-        />
-
-        <p className="block font-bold">Description</p>
-        <Editor
-          width="100%"
-          height="8rem"
-          defaultLanguage="markdown"
-          theme="vs-dark"
-          options={{ minimap: { enabled: false } }}
-          value={description}
-          onChange={(value) => setDescription(value ?? '')}
-        />
-
-        <p className="block font-bold">Initial Code</p>
-        <Editor
-          width="100%"
-          height="8rem"
-          defaultLanguage="javascript"
-          theme="vs-dark"
-          options={{ minimap: { enabled: false } }}
-          value={initialCode}
-          onChange={(value) => setInitialCode(value ?? '')}
-        />
-
-        <p className="block font-bold">Test Cases</p>
-        <Editor
-          width="100%"
-          height="8rem"
-          defaultLanguage="javascript"
-          theme="vs-dark"
-          options={{ minimap: { enabled: false } }}
-          value={testCases}
-          onChange={(value) => setTestCases(value ?? '')}
-        />
-
-        <p className="block font-bold">
-          Code for Verification (that you can do the problem)
-        </p>
-        <Editor
-          width="100%"
-          height="8rem"
-          defaultLanguage="javascript"
-          theme="vs-dark"
-          options={{ minimap: { enabled: false } }}
-          value={codeForVerification}
-          onChange={(value) => setCodeForVerification(value ?? '')}
-        />
-
-        <button
-          disabled={isSuccess}
-          onClick={create}
-          className="the-btn w-full"
+      <Dialog.Root>
+        <Dialog.Trigger className="the-btn block w-full">
+          Create New Challenge
+        </Dialog.Trigger>
+        <TheDialogPortal
+          title="Create New Challenge"
+          description="Fill in new challenge details"
         >
-          Create
-        </button>
-      </TheDialog>
+          {error ? (
+            <div className="bg-red-800 px-3 py-1">
+              <p className="whitespace-pre-wrap text-sm">{error}</p>
+            </div>
+          ) : (
+            ''
+          )}
+          {isSuccess ? (
+            <div className="bg-green-500 px-3 py-1">
+              <p>Success</p>
+            </div>
+          ) : (
+            ''
+          )}
+
+          <label htmlFor="title" className="block font-bold">
+            Title
+          </label>
+          <input
+            type="text"
+            name="title"
+            id="title"
+            placeholder="Enter challenge title"
+            value={title}
+            onChange={(evt) => setTitle(evt.target.value)}
+            className="the-input w-full sm:w-[512px] md:w-[640px]"
+          />
+
+          <label htmlFor="tier" className="block font-bold">
+            Tier
+          </label>
+          <input
+            type="number"
+            name="tier"
+            id="tier"
+            placeholder="Enter challenge tier"
+            min={1}
+            max={5}
+            value={tier}
+            onChange={(evt) => setTier(evt.target.value)}
+            className="the-input w-full sm:w-[512px] md:w-[640px]"
+          />
+
+          <p className="block font-bold">Description</p>
+          <Editor
+            width="100%"
+            height="8rem"
+            defaultLanguage="markdown"
+            theme="vs-dark"
+            options={{ minimap: { enabled: false } }}
+            value={description}
+            onChange={(value) => setDescription(value ?? '')}
+          />
+
+          <p className="block font-bold">Initial Code</p>
+          <Editor
+            width="100%"
+            height="8rem"
+            defaultLanguage="javascript"
+            theme="vs-dark"
+            options={{ minimap: { enabled: false } }}
+            value={initialCode}
+            onChange={(value) => setInitialCode(value ?? '')}
+          />
+
+          <p className="block font-bold">Test Cases</p>
+          <Editor
+            width="100%"
+            height="8rem"
+            defaultLanguage="javascript"
+            theme="vs-dark"
+            options={{ minimap: { enabled: false } }}
+            value={testCases}
+            onChange={(value) => setTestCases(value ?? '')}
+          />
+
+          <p className="block font-bold">
+            Code for Verification (that you can do the problem)
+          </p>
+          <Editor
+            width="100%"
+            height="8rem"
+            defaultLanguage="javascript"
+            theme="vs-dark"
+            options={{ minimap: { enabled: false } }}
+            value={codeForVerification}
+            onChange={(value) => setCodeForVerification(value ?? '')}
+          />
+
+          <button
+            disabled={isSuccess}
+            onClick={create}
+            className="the-btn w-full"
+          >
+            Create
+          </button>
+        </TheDialogPortal>
+      </Dialog.Root>
     </div>
   )
 }

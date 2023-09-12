@@ -1,5 +1,8 @@
+'use client'
+
+import * as Dialog from '@radix-ui/react-dialog'
 import { ChallengeSubmissionDto } from '@/types/types'
-import TheDialog from '../TheDialog'
+import TheDialogPortal from '../TheDialogPortal'
 
 export default function SubmissionsDisplay({
   submissions,
@@ -12,12 +15,12 @@ export default function SubmissionsDisplay({
         <p className="font-bold">{submission.user.name}</p>
         <p>{submission.code}</p>
 
-        <TheDialog
-          title="View Comments & Votes"
-          description="Here are the comments and votes for this submission"
-        >
-          <p>WIP!</p>
-        </TheDialog>
+        <Dialog.Root>
+          <Dialog.Trigger>View Comments & Votes</Dialog.Trigger>
+          <TheDialogPortal title="View Comments & Votes">
+            <p>WIP!</p>
+          </TheDialogPortal>
+        </Dialog.Root>
       </div>
     ))
   ) : (

@@ -2,12 +2,13 @@
 
 import { pcpService } from '@/services/RealPcpService'
 import * as Checkbox from '@radix-ui/react-checkbox'
+import * as Dialog from '@radix-ui/react-dialog'
 import { useState } from 'react'
 import useSWR from 'swr'
-import TheDialog from './components/TheDialog'
 import TheSelect from './components/TheSelect'
 import UsersDisplay from './components/display/UsersDisplay'
 import ChallengesDisplay from './components/display/ChallengesDisplay'
+import TheDialogPortal from './components/TheDialogPortal'
 
 export default function Home() {
   const tiers = ['5', '4', '3', '2', '1']
@@ -19,7 +20,7 @@ export default function Home() {
     data: usersData,
     error: usersError,
     isLoading: usersIsLoading,
-  } = useSWR('users', pcpService.userList)
+  } = useSWR('users', () => pcpService.userList())
 
   const {
     data: challengesData,
@@ -83,19 +84,29 @@ export default function Home() {
               ))}
             </div>
 
-            <TheDialog title="Tag Selection" description="Tags are WIP!">
-              <p>WIP</p>
-            </TheDialog>
+            <Dialog.Root>
+              <Dialog.Trigger className="the-btn block w-full">
+                Tag Selection
+              </Dialog.Trigger>
+              <TheDialogPortal>
+                <p>Tags are WIP!</p>
+              </TheDialogPortal>
+            </Dialog.Root>
 
-            <TheDialog
-              title="Language Selection"
-              description="Activate languages by clicking on them."
-            >
-              <p>Note: Language selection is WIP!</p>
-              <div className="flex flex-wrap gap-3">
-                <button className="the-btn">javascript</button>
-              </div>
-            </TheDialog>
+            <Dialog.Root>
+              <Dialog.Trigger className="the-btn block w-full">
+                Language Selection
+              </Dialog.Trigger>
+              <TheDialogPortal
+                title="Language Selection"
+                description="Activate languages by clicking on them."
+              >
+                <p>Note: Language selection is WIP!</p>
+                <div className="flex flex-wrap gap-3">
+                  <button className="the-btn">javascript</button>
+                </div>
+              </TheDialogPortal>
+            </Dialog.Root>
 
             <p>Sort By</p>
             <TheSelect
