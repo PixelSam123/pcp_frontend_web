@@ -25,9 +25,17 @@ export default function Home() {
     data: challengesData,
     error: challengesError,
     isLoading: challengesIsLoading,
-  } = useSWR(`challenges?tiers=${selectedTiers}&sort-by=${sortBy}`, () =>
+  } = useSWR(`challenges?${selectedTiers}&${sortBy}`, () =>
     pcpService.challengeList(selectedTiers, sortBy),
   )
+
+  const toggleTier = (tier: string) => {
+    if (selectedTiers.includes(tier)) {
+      setSelectedTiers((prev) => prev.filter((prev) => prev !== tier))
+    } else {
+      setSelectedTiers((prev) => [...prev, tier])
+    }
+  }
 
   return (
     <>
@@ -63,15 +71,7 @@ export default function Home() {
                     id={`check-t${tier}`}
                     value={tier}
                     checked={selectedTiers.includes(tier)}
-                    onClick={() => {
-                      if (selectedTiers.includes(tier)) {
-                        setSelectedTiers((prev) =>
-                          prev.filter((prev) => prev !== tier),
-                        )
-                      } else {
-                        setSelectedTiers((prev) => [...prev, tier])
-                      }
-                    }}
+                    onClick={() => toggleTier(tier)}
                     className="flex h-5 w-5 items-center justify-center border border-white"
                   >
                     <Checkbox.Indicator>

@@ -4,8 +4,8 @@ import { pcpService } from '@/services/RealPcpService'
 import { Editor } from '@monaco-editor/react'
 import { useState } from 'react'
 import useSWR from 'swr'
-import ChallengeHeader from '../components/ChallengeHeader'
 import TheDialog from '../components/TheDialog'
+import SessionChallengesDisplay from '../components/display/SessionChallengesDisplay'
 
 export default function Create() {
   const [title, setTitle] = useState('')
@@ -51,7 +51,7 @@ export default function Create() {
     data: sessionChallengesData,
     error: sessionChallengesError,
     isLoading: sessionChallengesIsLoading,
-  } = useSWR('session/challenges', () => pcpService.sessionChallenges())
+  } = useSWR('session/challenges', pcpService.sessionChallenges)
 
   return (
     <div className="space-y-3">
@@ -68,23 +68,8 @@ export default function Create() {
             <p>Error</p>
             <p className="text-xs">{sessionChallengesError.toString()}</p>
           </>
-        ) : sessionChallengesData?.length ? (
-          sessionChallengesData.map((challenge) => (
-            <div
-              key={challenge.id}
-              className="flex w-fit items-center justify-between gap-6"
-            >
-              <ChallengeHeader tier={challenge.tier} title={challenge.name} />
-              <TheDialog normalWidth title="Edit" description="WIP Feature!">
-                <p>This feature is WIP</p>
-              </TheDialog>
-            </div>
-          ))
         ) : (
-          <>
-            <p>No challenges</p>
-            <p className="text-xs">Create one!</p>
-          </>
+          <SessionChallengesDisplay challenges={sessionChallengesData ?? []} />
         )}
       </div>
       <TheDialog

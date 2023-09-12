@@ -2,14 +2,16 @@
 
 import ChallengeHeader from '@/app/components/ChallengeHeader'
 import TheDialog from '@/app/components/TheDialog'
+import ChallengeCommentsDisplay from '@/app/components/display/ChallengeCommentsDisplay'
+import SubmissionsDisplay from '@/app/components/display/SubmissionsDisplay'
+import VotesDisplay from '@/app/components/display/VotesDisplay'
 import { pcpService } from '@/services/RealPcpService'
 import { ChallengeDto } from '@/types/types'
 import Editor from '@monaco-editor/react'
-import { IconThumbDown, IconThumbUp } from '@tabler/icons-react'
 import { FormEvent, useEffect, useState } from 'react'
 import useSWR from 'swr'
 
-export default function Challenge({ params }: { params: { slug: string } }) {
+export default function Challenge({ params }: { params: { name: string } }) {
   const [challenge, setChallenge] = useState<ChallengeDto | null>(null)
   const [error, setError] = useState('')
 
@@ -27,37 +29,37 @@ export default function Challenge({ params }: { params: { slug: string } }) {
     data: commentsData,
     error: commentsError,
     isLoading: commentsIsLoading,
-  } = useSWR(`challenges/${params.slug}`, () =>
-    pcpService.challengeCommentListByChallengeName(params.slug),
+  } = useSWR(`challenges/name/${params.name}`, () =>
+    pcpService.challengeCommentListByChallengeName(params.name),
   )
 
   const {
     data: submissionsData,
     error: submissionsError,
     isLoading: submissionsIsLoading,
-  } = useSWR(`challenge_submissions/${params.slug}`, () =>
-    pcpService.challengeSubmissionListByChallengeName(params.slug),
+  } = useSWR(`challenge-submissions/challenge-name/${params.name}`, () =>
+    pcpService.challengeSubmissionListByChallengeName(params.name),
   )
 
   const {
     data: votesData,
     error: votesError,
     isLoading: votesIsLoading,
-  } = useSWR(`challenge_votes/${params.slug}`, () =>
-    pcpService.challengeVoteListByChallengeName(params.slug),
+  } = useSWR(`challenge-votes/challenge-name/${params.name}`, () =>
+    pcpService.challengeVoteListByChallengeName(params.name),
   )
 
   useEffect(() => {
-    ;(async () => {
+    ; (async () => {
       try {
-        const challenge = await pcpService.challengeGetByName(params.slug)
+        const challenge = await pcpService.challengeGetByName(params.name)
         setChallenge(challenge)
         setCode(challenge.initialCode)
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error')
       }
     })()
-  }, [params.slug])
+  }, [params.name])
 
   if (error) {
     return <p>{error}</p>
@@ -113,15 +115,7 @@ export default function Challenge({ params }: { params: { slug: string } }) {
           <p className="text-xs">{votesError.toString()}</p>
         </>
       ) : (
-        <div className="flex gap-3">
-          <button className="the-btn flex items-center gap-x-3">
-            <IconThumbUp /> {votesData?.filter((vote) => vote.isUpvote).length}
-          </button>
-          <button className="the-btn flex items-center gap-x-3">
-            <IconThumbDown />{' '}
-            {votesData?.filter((vote) => !vote.isUpvote).length}
-          </button>
-        </div>
+        <VotesDisplay votes={votesData ?? []} />
       )}
 
       <div className="the-card space-y-3">
@@ -143,22 +137,8 @@ export default function Challenge({ params }: { params: { slug: string } }) {
               <p>Error fetching submissions</p>
               <p className="text-xs">{submissionsError.toString()}</p>
             </>
-          ) : submissionsData?.length ? (
-            submissionsData.map((submission) => (
-              <div key={submission.id} className="the-card space-y-3">
-                <p className="font-bold">{submission.user.name}</p>
-                <p>{submission.code}</p>
-
-                <TheDialog
-                  title="View Comments & Votes"
-                  description="Here are the comments and votes for this submission"
-                >
-                  <p>WIP!</p>
-                </TheDialog>
-              </div>
-            ))
           ) : (
-            <p>There are no submissions</p>
+            <SubmissionsDisplay submissions={submissionsData ?? []} />
           )}
         </TheDialog>
       </div>
@@ -234,15 +214,8 @@ export default function Challenge({ params }: { params: { slug: string } }) {
             <p>Error fetching comments</p>
             <p className="text-xs">{commentsError.toString()}</p>
           </>
-        ) : commentsData?.length ? (
-          commentsData.map((comment) => (
-            <div key={comment.id} className="the-card space-y-3">
-              <p className="font-bold">{comment.user.name}</p>
-              <p>{comment.content}</p>
-            </div>
-          ))
         ) : (
-          <p>There are no comments</p>
+          <ChallengeCommentsDisplay comments={commentsData ?? []} />
         )}
       </div>
     </div>
