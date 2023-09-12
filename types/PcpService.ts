@@ -45,6 +45,8 @@ interface PcpService {
 
   challengeGetByName(name: string): Promise<ChallengeDto>
 
+  challengeDelete(id: number): Promise<void>
+
   challengeCommentCreate(
     challengeCommentToCreate: ChallengeCommentCreateDto,
   ): Promise<void>

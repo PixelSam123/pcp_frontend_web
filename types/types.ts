@@ -71,7 +71,7 @@ type ChallengeSubmissionDto = {
 
 type ChallengeSubmissionCommentCreateDto = {
   content: string
-  submissionId: number
+  challengeSubmissionId: number
 }
 
 type ChallengeSubmissionCommentDto = {
@@ -82,7 +82,7 @@ type ChallengeSubmissionCommentDto = {
 
 type ChallengeSubmissionVoteCreateDto = {
   isUpvote: boolean
-  submissionId: number
+  challengeSubmissionId: number
 }
 
 type ChallengeSubmissionVoteDto = {
