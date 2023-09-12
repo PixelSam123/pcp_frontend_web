@@ -1,8 +1,8 @@
-import './globals.css'
 import type { Metadata } from 'next'
 import { JetBrains_Mono as JetbrainsMono } from 'next/font/google'
 import Link from 'next/link'
 import ProfileButton from './components/ProfileButton'
+import './globals.css'
 
 const jetbrainsMono = JetbrainsMono({ subsets: ['latin'] })
 

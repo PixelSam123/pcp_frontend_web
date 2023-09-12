@@ -1,8 +1,8 @@
 'use client'
 
+import { pcpService } from '@/services/RealPcpService'
 import { FormEvent, useState } from 'react'
 import TheDialog from './TheDialog'
-import { pcpService } from '@/services/RealPcpService'
 
 export default function SignUpDialog() {
   const [username, setUsername] = useState('')

@@ -1,19 +1,19 @@
 'use client'
 
+import { pcpService } from '@/services/RealPcpService'
+import * as Checkbox from '@radix-ui/react-checkbox'
 import {
   IconTargetArrow,
   IconThumbDown,
   IconThumbUp,
   IconUser,
 } from '@tabler/icons-react'
-import * as Checkbox from '@radix-ui/react-checkbox'
 import Link from 'next/link'
-import TheSelect from './components/TheSelect'
-import ChallengeHeader from './components/ChallengeHeader'
-import TheDialog from './components/TheDialog'
 import { useState } from 'react'
 import useSWR from 'swr'
-import { pcpService } from '@/services/RealPcpService'
+import ChallengeHeader from './components/ChallengeHeader'
+import TheDialog from './components/TheDialog'
+import TheSelect from './components/TheSelect'
 
 export default function Home() {
   const tiers = ['5', '4', '3', '2', '1']
@@ -25,13 +25,13 @@ export default function Home() {
     data: usersData,
     error: usersError,
     isLoading: usersIsLoading,
-  } = useSWR('users', () => pcpService.userList())
+  } = useSWR('users', pcpService.userList)
 
   const {
     data: challengesData,
     error: challengesError,
     isLoading: challengesIsLoading,
-  } = useSWR(`challenges?tiers=${selectedTiers}&sortBy=${sortBy}`, () =>
+  } = useSWR(`challenges?tiers=${selectedTiers}&sort-by=${sortBy}`, () =>
     pcpService.challengeList(selectedTiers, sortBy),
   )
 

@@ -92,19 +92,19 @@ type ChallengeSubmissionVoteDto = {
 }
 
 export type {
-  UserCreateDto,
-  UserBriefDto,
+  ChallengeBriefDto,
+  ChallengeCommentCreateDto,
+  ChallengeCommentDto,
   ChallengeCreateDto,
   ChallengeDto,
-  ChallengeBriefDto,
-  ChallengeCommentDto,
-  ChallengeCommentCreateDto,
-  ChallengeVoteCreateDto,
-  ChallengeVoteDto,
-  ChallengeSubmissionCreateDto,
-  ChallengeSubmissionDto,
   ChallengeSubmissionCommentCreateDto,
   ChallengeSubmissionCommentDto,
+  ChallengeSubmissionCreateDto,
+  ChallengeSubmissionDto,
   ChallengeSubmissionVoteCreateDto,
   ChallengeSubmissionVoteDto,
+  ChallengeVoteCreateDto,
+  ChallengeVoteDto,
+  UserBriefDto,
+  UserCreateDto,
 }

@@ -1,12 +1,12 @@
 'use client'
 
+import { pcpService } from '@/services/RealPcpService'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import { IconSelect } from '@tabler/icons-react'
-import TheDialog from './TheDialog'
-import SignUpDialog from './SignUpDialog'
 import { FormEvent, useState } from 'react'
-import { pcpService } from '@/services/RealPcpService'
 import useSWR from 'swr'
+import SignUpDialog from './SignUpDialog'
+import TheDialog from './TheDialog'
 
 export default function ProfileButton() {
   const {

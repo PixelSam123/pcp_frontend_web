@@ -1,13 +1,13 @@
 'use client'
 
-import Editor from '@monaco-editor/react'
 import ChallengeHeader from '@/app/components/ChallengeHeader'
-import { FormEvent, useEffect, useState } from 'react'
+import TheDialog from '@/app/components/TheDialog'
 import { pcpService } from '@/services/RealPcpService'
 import { ChallengeDto } from '@/types/types'
-import useSWR from 'swr'
-import TheDialog from '@/app/components/TheDialog'
+import Editor from '@monaco-editor/react'
 import { IconThumbDown, IconThumbUp } from '@tabler/icons-react'
+import { FormEvent, useEffect, useState } from 'react'
+import useSWR from 'swr'
 
 export default function Challenge({ params }: { params: { slug: string } }) {
   const [challenge, setChallenge] = useState<ChallengeDto | null>(null)

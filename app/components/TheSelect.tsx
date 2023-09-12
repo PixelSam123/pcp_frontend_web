@@ -1,7 +1,7 @@
 'use client'
 
-import { IconCheck, IconSelect } from '@tabler/icons-react'
 import * as Select from '@radix-ui/react-select'
+import { IconCheck, IconSelect } from '@tabler/icons-react'
 
 export default function TheSelect({
   value,
