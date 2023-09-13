@@ -21,21 +21,17 @@ export default function SignOutForm() {
 
   return (
     <>
-      {signOutError ? (
+      {signOutError && (
         <div className="bg-red-800 px-3 py-1">
           <p>{signOutError}</p>
         </div>
-      ) : (
-        ''
       )}
-      {isSignOutSuccess ? (
+      {isSignOutSuccess && (
         <div className="bg-green-500 px-3 py-1">
           <p>Success</p>
         </div>
-      ) : (
-        ''
       )}
-      <button onClick={signOut} className="the-btn mr-3">
+      <button onClick={signOut} className="the-btn w-full mr-3">
         Yes
       </button>
     </>

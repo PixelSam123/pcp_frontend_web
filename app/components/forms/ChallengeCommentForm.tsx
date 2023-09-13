@@ -31,19 +31,15 @@ export default function ChallengeCommentForm({
 
   return (
     <form onSubmit={postComment} className="space-y-3">
-      {error ? (
+      {error && (
         <div className="bg-red-800 px-3 py-1">
           <p>{error}</p>
         </div>
-      ) : (
-        ''
       )}
-      {isSuccess ? (
+      {isSuccess && (
         <div className="bg-green-500 px-3 py-1">
           <p>Success</p>
         </div>
-      ) : (
-        ''
       )}
 
       <textarea

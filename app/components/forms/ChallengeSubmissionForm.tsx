@@ -45,19 +45,15 @@ export default function ChallengeSubmissionForm({
         Submit Attempt
       </button>
 
-      {error ? (
+      {error && (
         <div className="bg-red-800 px-3 py-1">
           <p className="whitespace-pre-wrap text-sm">{error}</p>
         </div>
-      ) : (
-        ''
       )}
-      {isSuccess ? (
+      {isSuccess && (
         <div className="bg-green-500 px-3 py-1">
           <p>Success</p>
         </div>
-      ) : (
-        ''
       )}
     </>
   )

@@ -25,19 +25,15 @@ export default function SignInForm() {
 
   return (
     <form onSubmit={signIn} className="flex flex-col gap-3">
-      {error ? (
+      {error && (
         <div className="bg-red-800 px-3 py-1">
           <p>{error}</p>
         </div>
-      ) : (
-        ''
       )}
-      {isSuccess ? (
+      {isSuccess && (
         <div className="bg-green-500 px-3 py-1">
           <p>Success</p>
         </div>
-      ) : (
-        ''
       )}
 
       <label htmlFor="username">Username</label>
