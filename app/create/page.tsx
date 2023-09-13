@@ -5,7 +5,6 @@ import { pcpService } from '@/services/RealPcpService'
 import { Editor } from '@monaco-editor/react'
 import { useState } from 'react'
 import useSWR from 'swr'
-import TheDialog from '../components/TheDialog'
 import SessionChallengesDisplay from '../components/display/SessionChallengesDisplay'
 import TheDialogPortal from '../components/TheDialogPortal'
 

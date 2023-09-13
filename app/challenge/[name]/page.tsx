@@ -7,24 +7,15 @@ import SubmissionsDisplay from '@/app/components/display/SubmissionsDisplay'
 import VotesDisplay from '@/app/components/display/VotesDisplay'
 import { pcpService } from '@/services/RealPcpService'
 import { ChallengeDto } from '@/types/types'
-import Editor from '@monaco-editor/react'
-import { FormEvent, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import TheDialogPortal from '@/app/components/TheDialogPortal'
+import ChallengeCommentForm from '@/app/components/forms/ChallengeCommentForm'
+import ChallengeSubmissionForm from '@/app/components/forms/ChallengeSubmissionForm'
 
 export default function Challenge({ params }: { params: { name: string } }) {
   const [challenge, setChallenge] = useState<ChallengeDto | null>(null)
   const [error, setError] = useState('')
-
-  const [code, setCode] = useState('')
-
-  const [submitError, setSubmitError] = useState('')
-  const [isSubmitSuccess, setIsSubmitSuccess] = useState(false)
-
-  const [commentToPost, setCommentToPost] = useState('')
-
-  const [commentError, setCommentError] = useState('')
-  const [isCommentSuccess, setIsCommentSuccess] = useState(false)
 
   const {
     data: commentsData,
@@ -51,11 +42,10 @@ export default function Challenge({ params }: { params: { name: string } }) {
   )
 
   useEffect(() => {
-    ; (async () => {
+    ;(async () => {
       try {
         const challenge = await pcpService.challengeGetByName(params.name)
         setChallenge(challenge)
-        setCode(challenge.initialCode)
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error')
       }
@@ -68,37 +58,6 @@ export default function Challenge({ params }: { params: { name: string } }) {
 
   if (!challenge) {
     return <p>Loading...</p>
-  }
-
-  const submitAttempt = async () => {
-    setSubmitError('')
-    setIsSubmitSuccess(false)
-
-    try {
-      await pcpService.challengeSubmissionCreate({
-        challengeId: challenge.id,
-        code: code,
-      })
-      setIsSubmitSuccess(true)
-    } catch (err) {
-      setSubmitError(err instanceof Error ? err.message : 'Unknown error')
-    }
-  }
-
-  const postComment = async (evt: FormEvent<HTMLFormElement>) => {
-    evt.preventDefault()
-    setCommentError('')
-    setIsCommentSuccess(false)
-
-    try {
-      await pcpService.challengeCommentCreate({
-        challengeId: challenge.id,
-        content: commentToPost,
-      })
-      setIsCommentSuccess(true)
-    } catch (err) {
-      setCommentError(err instanceof Error ? err.message : 'Unknown error')
-    }
   }
 
   return (
@@ -148,64 +107,17 @@ export default function Challenge({ params }: { params: { name: string } }) {
 
       <div className="the-card space-y-3">
         <p className="font-bold">Editor</p>
-        <Editor
-          height="24rem"
-          defaultLanguage="javascript"
-          value={code}
-          onChange={(value) => setCode(value ?? '')}
-          theme="vs-dark"
+
+        <ChallengeSubmissionForm
+          challengeId={challenge.id}
+          initialCode={challenge.initialCode}
         />
-
-        <button onClick={submitAttempt} className="the-btn w-full">
-          Submit Attempt
-        </button>
-
-        {submitError ? (
-          <div className="bg-red-800 px-3 py-1">
-            <p className="whitespace-pre-wrap text-sm">{submitError}</p>
-          </div>
-        ) : (
-          ''
-        )}
-        {isSubmitSuccess ? (
-          <div className="bg-green-500 px-3 py-1">
-            <p>Success</p>
-          </div>
-        ) : (
-          ''
-        )}
       </div>
 
       <div className="the-card space-y-3">
         <p className="font-bold">Comments</p>
 
-        <form onSubmit={postComment} className="space-y-3">
-          {commentError ? (
-            <div className="bg-red-800 px-3 py-1">
-              <p>{commentError}</p>
-            </div>
-          ) : (
-            ''
-          )}
-          {isCommentSuccess ? (
-            <div className="bg-green-500 px-3 py-1">
-              <p>Success</p>
-            </div>
-          ) : (
-            ''
-          )}
-
-          <textarea
-            required
-            value={commentToPost}
-            onChange={(evt) => setCommentToPost(evt.target.value)}
-            placeholder="Type your comment here..."
-            className="the-input block w-full"
-          />
-          <button type="submit" className="the-btn w-full">
-            Submit Comment
-          </button>
-        </form>
+        <ChallengeCommentForm challengeId={challenge.id} />
 
         {commentsIsLoading ? (
           <>
