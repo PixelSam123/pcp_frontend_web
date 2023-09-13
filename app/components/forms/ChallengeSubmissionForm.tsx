@@ -6,10 +6,10 @@ import { useState } from 'react'
 
 export default function ChallengeSubmissionForm({
   challengeId,
-  initialCode,
+  codeInitialValue: initialCode,
 }: {
   challengeId: number
-  initialCode: string
+  codeInitialValue: string
 }) {
   const [code, setCode] = useState(initialCode)
 

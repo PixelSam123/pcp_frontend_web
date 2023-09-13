@@ -110,7 +110,7 @@ export default function Challenge({ params }: { params: { name: string } }) {
 
         <ChallengeSubmissionForm
           challengeId={challenge.id}
-          initialCode={challenge.initialCode}
+          codeInitialValue={challenge.initialCode}
         />
       </div>
 

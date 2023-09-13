@@ -3,16 +3,20 @@
 import { pcpService } from '@/services/RealPcpService'
 import { useState } from 'react'
 
-export default function SignOutForm() {
+export default function ChallengeDeleteForm({
+  challengeId,
+}: {
+  challengeId: number
+}) {
   const [error, setError] = useState('')
   const [isSuccess, setIsSuccess] = useState(false)
 
-  const signOut = async () => {
+  const deleteChallenge = async () => {
     setError('')
     setIsSuccess(false)
 
     try {
-      await pcpService.sessionLogout()
+      await pcpService.challengeDelete(challengeId)
       setIsSuccess(true)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error')
@@ -31,7 +35,7 @@ export default function SignOutForm() {
           <p>Success</p>
         </div>
       )}
-      <button onClick={signOut} className="the-btn w-full mr-3">
+      <button onClick={deleteChallenge} className="the-btn mr-3 w-full">
         Yes
       </button>
     </>

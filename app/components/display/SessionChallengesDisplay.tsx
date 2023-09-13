@@ -3,6 +3,8 @@ import * as Dialog from '@radix-ui/react-dialog'
 import { ChallengeBriefDto } from '@/types/types'
 import ChallengeHeader from '../ChallengeHeader'
 import TheDialogPortal from '../TheDialogPortal'
+import ChallengeDeleteForm from '../forms/ChallengeDeleteForm'
+import ChallengeEditForm from '../forms/ChallengeEditForm'
 
 export default function SessionChallengesDisplay({
   challenges,
@@ -17,12 +19,23 @@ export default function SessionChallengesDisplay({
       >
         <ChallengeHeader tier={challenge.tier} title={challenge.name} />
 
-        <Dialog.Root>
-          <Dialog.Trigger className="the-btn block">Edit</Dialog.Trigger>
-          <TheDialogPortal title="Edit">
-            <p>This feature is WIP</p>
-          </TheDialogPortal>
-        </Dialog.Root>
+        <div>
+          <Dialog.Root>
+            <Dialog.Trigger className="the-btn block">Edit</Dialog.Trigger>
+            <TheDialogPortal
+              title="Edit"
+              description="Edit your challenge details"
+            >
+              <ChallengeEditForm challengeName={challenge.name} />
+            </TheDialogPortal>
+          </Dialog.Root>
+          <Dialog.Root>
+            <Dialog.Trigger className="the-btn block">Delete</Dialog.Trigger>
+            <TheDialogPortal title="Delete" description="Are you sure?">
+              <ChallengeDeleteForm challengeId={challenge.id} />
+            </TheDialogPortal>
+          </Dialog.Root>
+        </div>
       </div>
     ))
   ) : (
