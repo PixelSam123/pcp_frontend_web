@@ -111,7 +111,7 @@ export default function Home() {
             <p>Sort By</p>
             <TheSelect
               value={sortBy}
-              onValueChange={(value) => setSortBy(value)}
+              onValueChange={setSortBy}
               options={[
                 { text: 'Newest', value: 'newest' },
                 { text: 'Oldest', value: 'oldest' },
