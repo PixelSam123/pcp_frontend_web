@@ -20,15 +20,15 @@ export default function Create() {
         <p className="font-bold">Published Challenges</p>
 
         {sessionChallengesIsLoading ? (
-          <>
+          <div>
             <p>Loading...</p>
             <p className="text-xs">Please wait</p>
-          </>
+          </div>
         ) : sessionChallengesError ? (
-          <>
+          <div>
             <p>Error</p>
             <p className="text-xs">{sessionChallengesError.toString()}</p>
-          </>
+          </div>
         ) : (
           <SessionChallengesDisplay challenges={sessionChallengesData ?? []} />
         )}
