@@ -58,20 +58,20 @@ class RealPcpService implements PcpService {
     })
   }
 
-  async sessionChallengeIsUpvoteByChallengeId(
-    challengeId: number,
-  ): Promise<boolean | null> {
+  async sessionChallengeVoteByChallengeName(
+    challengeName: string,
+  ): Promise<ChallengeVoteDto | null> {
     return await fetchJson(
-      `${this.baseUrl}/session/challenge-votes/${challengeId}`,
+      `${this.baseUrl}/session/challenge-votes/name/${challengeName}`,
       {
         credentials: 'include',
       },
     )
   }
 
-  async sessionChallengeSubmissionIsUpvoteByChallengeSubmissionId(
+  async sessionChallengeSubmissionVoteByChallengeSubmissionId(
     challengeSubmissionId: number,
-  ): Promise<boolean | null> {
+  ): Promise<ChallengeSubmissionVoteDto | null> {
     return await fetchJson(
       `${this.baseUrl}/session/challenge-submission-votes/${challengeSubmissionId}`,
       {
@@ -255,7 +255,7 @@ class RealPcpService implements PcpService {
     )
   }
 
-  async submissionVoteDelete(id: number): Promise<void> {
+  async challengeSubmissionVoteDelete(id: number): Promise<void> {
     return await fetchJson(`${this.baseUrl}/challenge-votes/${id}`, {
       method: 'DELETE',
       credentials: 'include',

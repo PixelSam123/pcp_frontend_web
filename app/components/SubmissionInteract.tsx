@@ -2,6 +2,9 @@
 
 import { pcpService } from '@/services/RealPcpService'
 import useSWR from 'swr'
+import SubmissionCommentsDisplay from './display/SubmissionCommentsDisplay'
+import SubmissionCommentForm from './forms/SubmissionCommentForm'
+import SubmissionVoteForm from './forms/SubmissionVoteForm'
 
 export default function SubmissionInteract({
   submissionId,
@@ -29,9 +32,19 @@ export default function SubmissionInteract({
     () => pcpService.challengeSubmissionVoteListBySubmissionId(submissionId),
   )
 
+  const {
+    data: sessionVoteData,
+    error: sessionVoteError,
+    isLoading: sessionVoteIsLoading,
+  } = useSWR(`session/challenge-submission-votes/${submissionId}`, () =>
+    pcpService.sessionChallengeSubmissionVoteByChallengeSubmissionId(
+      submissionId,
+    ),
+  )
+
   return (
     <>
-      {votesIsLoading ? (
+      {votesIsLoading || sessionVoteIsLoading ? (
         <>
           <p>Loading...</p>
           <p className="text-xs">Please wait</p>
@@ -41,12 +54,23 @@ export default function SubmissionInteract({
           <p>Error fetching votes</p>
           <p className="text-xs">{votesError.toString()}</p>
         </>
+      ) : sessionVoteError ? (
+        <div>
+          <p>Error fetching self upvote</p>
+          <p className="text-xs">{sessionVoteError.toString()}</p>
+        </div>
       ) : (
-        <p>barfoo</p>
+        <SubmissionVoteForm
+          votes={votesData ?? []}
+          sessionVote={sessionVoteData ?? null}
+          submissionId={submissionId}
+        />
       )}
 
       <div className="the-card space-y-3">
         <p className="font-bold">Comments</p>
+
+        <SubmissionCommentForm submissionId={submissionId} />
 
         {commentsIsLoading ? (
           <>
@@ -59,7 +83,7 @@ export default function SubmissionInteract({
             <p className="text-xs">{commentsError.toString()}</p>
           </>
         ) : (
-          <p>foobar</p>
+          <SubmissionCommentsDisplay comments={commentsData ?? []} />
         )}
       </div>
     </>

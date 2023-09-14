@@ -4,7 +4,7 @@ import * as Dialog from '@radix-ui/react-dialog'
 import ChallengeHeader from '@/app/components/ChallengeHeader'
 import ChallengeCommentsDisplay from '@/app/components/display/ChallengeCommentsDisplay'
 import SubmissionsDisplay from '@/app/components/display/SubmissionsDisplay'
-import VotesForm from '@/app/components/forms/VotesForm'
+import ChallengeVoteForm from '@/app/components/forms/ChallengeVoteForm'
 import { pcpService } from '@/services/RealPcpService'
 import { ChallengeDto } from '@/types/types'
 import { useEffect, useState } from 'react'
@@ -41,6 +41,14 @@ export default function Challenge({ params }: { params: { name: string } }) {
     pcpService.challengeVoteListByChallengeName(params.name),
   )
 
+  const {
+    data: sessionVoteData,
+    error: sessionVoteError,
+    isLoading: sessionVoteIsLoading,
+  } = useSWR(`session/challenge-votes/name/${params.name}`, () =>
+    pcpService.sessionChallengeVoteByChallengeName(params.name),
+  )
+
   useEffect(() => {
     ;(async () => {
       try {
@@ -64,18 +72,27 @@ export default function Challenge({ params }: { params: { name: string } }) {
     <div className="space-y-3">
       <ChallengeHeader tier={challenge.tier} title={challenge.name} />
 
-      {votesIsLoading ? (
-        <>
+      {votesIsLoading || sessionVoteIsLoading ? (
+        <div>
           <p>Loading...</p>
           <p className="text-xs">Please wait</p>
-        </>
+        </div>
       ) : votesError ? (
-        <>
+        <div>
           <p>Error fetching votes</p>
           <p className="text-xs">{votesError.toString()}</p>
-        </>
+        </div>
+      ) : sessionVoteError ? (
+        <div>
+          <p>Error fetching self upvote</p>
+          <p className="text-xs">{sessionVoteError.toString()}</p>
+        </div>
       ) : (
-        <VotesForm votes={votesData ?? []} />
+        <ChallengeVoteForm
+          votes={votesData ?? []}
+          sessionVote={sessionVoteData ?? null}
+          challengeId={challenge.id}
+        />
       )}
 
       <div className="the-card space-y-3">

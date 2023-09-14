@@ -28,13 +28,13 @@ interface PcpService {
 
   sessionChallenge(name: string): Promise<ChallengeSecuredDto>
 
-  sessionChallengeIsUpvoteByChallengeId(
-    challengeId: number,
-  ): Promise<boolean | null>
+  sessionChallengeVoteByChallengeName(
+    challengeName: string,
+  ): Promise<ChallengeVoteDto | null>
 
-  sessionChallengeSubmissionIsUpvoteByChallengeSubmissionId(
+  sessionChallengeSubmissionVoteByChallengeSubmissionId(
     challengeSubmissionId: number,
-  ): Promise<boolean | null>
+  ): Promise<ChallengeSubmissionVoteDto | null>
 
   userCreate(userToCreate: UserCreateDto): Promise<void>
 
@@ -94,7 +94,7 @@ interface PcpService {
     submissionId: number,
   ): Promise<ChallengeSubmissionVoteDto[]>
 
-  submissionVoteDelete(id: number): Promise<void>
+  challengeSubmissionVoteDelete(id: number): Promise<void>
 }
 
 export type { PcpService }
