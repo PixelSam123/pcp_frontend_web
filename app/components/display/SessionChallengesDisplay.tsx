@@ -19,9 +19,9 @@ export default function SessionChallengesDisplay({
       >
         <ChallengeHeader tier={challenge.tier} title={challenge.name} />
 
-        <div>
+        <div className="space-x-3">
           <Dialog.Root>
-            <Dialog.Trigger className="the-btn block">Edit</Dialog.Trigger>
+            <Dialog.Trigger className="the-btn">Edit</Dialog.Trigger>
             <TheDialogPortal
               title="Edit"
               description="Edit your challenge details"
@@ -30,7 +30,7 @@ export default function SessionChallengesDisplay({
             </TheDialogPortal>
           </Dialog.Root>
           <Dialog.Root>
-            <Dialog.Trigger className="the-btn block">Delete</Dialog.Trigger>
+            <Dialog.Trigger className="the-btn">Delete</Dialog.Trigger>
             <TheDialogPortal title="Delete" description="Are you sure?">
               <ChallengeDeleteForm challengeId={challenge.id} />
             </TheDialogPortal>

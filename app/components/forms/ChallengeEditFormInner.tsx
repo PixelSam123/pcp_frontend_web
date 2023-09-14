@@ -1,31 +1,30 @@
 'use client'
 
+import { pcpService } from '@/services/RealPcpService'
 import Editor from '@monaco-editor/react'
 import { useState } from 'react'
 
 export default function ChallengeEditFormInner({
+  challengeId,
   titleInitialValue,
   tierInitialValue,
   descriptionInitialValue,
   initialCodeInitialValue,
   testCasesInitialValue,
-  codeForVerificationInitialValue,
 }: {
+  challengeId: number
   titleInitialValue: string
   tierInitialValue: string
   descriptionInitialValue: string
   initialCodeInitialValue: string
   testCasesInitialValue: string
-  codeForVerificationInitialValue: string
 }) {
   const [title, setTitle] = useState(titleInitialValue)
   const [tier, setTier] = useState(tierInitialValue)
   const [description, setDescription] = useState(descriptionInitialValue)
   const [initialCode, setInitialCode] = useState(initialCodeInitialValue)
   const [testCases, setTestCases] = useState(testCasesInitialValue)
-  const [codeForVerification, setCodeForVerification] = useState(
-    codeForVerificationInitialValue,
-  )
+  const [codeForVerification, setCodeForVerification] = useState('')
 
   const [error, setError] = useState('')
   const [isSuccess, setIsSuccess] = useState(false)
@@ -45,14 +44,14 @@ export default function ChallengeEditFormInner({
         throw new Error('Tier must be between 1 and 5')
       }
 
-      /*await pcpService.challengeEdit({
+      await pcpService.challengeUpdate(challengeId, {
         name: title,
         tier: parsedTier,
         description,
         initialCode,
         testCase: testCases,
         codeForVerification,
-      })*/
+      })
       setIsSuccess(true)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error')

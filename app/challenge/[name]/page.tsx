@@ -4,7 +4,7 @@ import * as Dialog from '@radix-ui/react-dialog'
 import ChallengeHeader from '@/app/components/ChallengeHeader'
 import ChallengeCommentsDisplay from '@/app/components/display/ChallengeCommentsDisplay'
 import SubmissionsDisplay from '@/app/components/display/SubmissionsDisplay'
-import VotesDisplay from '@/app/components/display/VotesDisplay'
+import VotesForm from '@/app/components/forms/VotesForm'
 import { pcpService } from '@/services/RealPcpService'
 import { ChallengeDto } from '@/types/types'
 import { useEffect, useState } from 'react'
@@ -75,7 +75,7 @@ export default function Challenge({ params }: { params: { name: string } }) {
           <p className="text-xs">{votesError.toString()}</p>
         </>
       ) : (
-        <VotesDisplay votes={votesData ?? []} />
+        <VotesForm votes={votesData ?? []} />
       )}
 
       <div className="the-card space-y-3">

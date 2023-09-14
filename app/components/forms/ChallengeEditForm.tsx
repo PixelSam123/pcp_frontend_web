@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { pcpService } from '@/services/RealPcpService'
-import { ChallengeDto } from '@/types/types'
+import { ChallengeSecuredDto } from '@/types/types'
 import ChallengeEditFormInner from './ChallengeEditFormInner'
 
 export default function ChallengeEditForm({
@@ -10,13 +10,13 @@ export default function ChallengeEditForm({
 }: {
   challengeName: string
 }) {
-  const [challenge, setChallenge] = useState<ChallengeDto | null>(null)
+  const [challenge, setChallenge] = useState<ChallengeSecuredDto | null>(null)
   const [challengeError, setChallengeError] = useState('')
 
   useEffect(() => {
     ;(async () => {
       try {
-        const challenge = await pcpService.challengeGetByName(challengeName)
+        const challenge = await pcpService.sessionChallenge(challengeName)
         setChallenge(challenge)
       } catch (err) {
         setChallengeError(err instanceof Error ? err.message : 'Unknown error')
@@ -34,12 +34,12 @@ export default function ChallengeEditForm({
 
   return (
     <ChallengeEditFormInner
+      challengeId={challenge.id}
       titleInitialValue={challenge.name}
       tierInitialValue={challenge.tier.toString()}
       descriptionInitialValue={challenge.description}
       initialCodeInitialValue={challenge.initialCode}
-      testCasesInitialValue={/*TODO*/}
-      codeForVerificationInitialValue={/*TODO*/}
+      testCasesInitialValue={challenge.testCase}
     />
   )
 }

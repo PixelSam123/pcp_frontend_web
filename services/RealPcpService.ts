@@ -5,6 +5,7 @@ import {
   ChallengeCommentDto,
   ChallengeCreateDto,
   ChallengeDto,
+  ChallengeSecuredDto,
   ChallengeSubmissionCommentCreateDto,
   ChallengeSubmissionCommentDto,
   ChallengeSubmissionCreateDto,
@@ -47,6 +48,12 @@ class RealPcpService implements PcpService {
 
   async sessionChallenges(): Promise<ChallengeBriefDto[]> {
     return await fetchJson(`${this.baseUrl}/session/challenges`, {
+      credentials: 'include',
+    })
+  }
+
+  async sessionChallenge(name: string): Promise<ChallengeSecuredDto> {
+    return await fetchJson(`${this.baseUrl}/session/challenges/name/${name}`, {
       credentials: 'include',
     })
   }
@@ -113,6 +120,20 @@ class RealPcpService implements PcpService {
 
   async challengeGetByName(name: string): Promise<ChallengeDto> {
     return await fetchJson(`${this.baseUrl}/challenges/name/${name}`)
+  }
+
+  async challengeUpdate(
+    id: number,
+    challenge: ChallengeCreateDto,
+  ): Promise<void> {
+    await fetchVoid(`${this.baseUrl}/challenges/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(challenge),
+      credentials: 'include',
+    })
   }
 
   async challengeDelete(id: number): Promise<void> {

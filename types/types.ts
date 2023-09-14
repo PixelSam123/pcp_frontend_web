@@ -36,6 +36,15 @@ type ChallengeBriefDto = {
   user: UserBriefDto
 }
 
+type ChallengeSecuredDto = {
+  id: number
+  name: string
+  tier: number
+  description: string
+  initialCode: string
+  testCase: string
+}
+
 type ChallengeCommentCreateDto = {
   content: string
   challengeId: number
@@ -97,6 +106,7 @@ export type {
   ChallengeCommentDto,
   ChallengeCreateDto,
   ChallengeDto,
+  ChallengeSecuredDto,
   ChallengeSubmissionCommentCreateDto,
   ChallengeSubmissionCommentDto,
   ChallengeSubmissionCreateDto,

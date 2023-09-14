@@ -4,6 +4,7 @@ import {
   ChallengeCommentDto,
   ChallengeCreateDto,
   ChallengeDto,
+  ChallengeSecuredDto,
   ChallengeSubmissionCommentCreateDto,
   ChallengeSubmissionCommentDto,
   ChallengeSubmissionCreateDto,
@@ -25,6 +26,8 @@ interface PcpService {
 
   sessionChallenges(): Promise<ChallengeBriefDto[]>
 
+  sessionChallenge(name: string): Promise<ChallengeSecuredDto>
+
   sessionChallengeIsUpvoteByChallengeId(
     challengeId: number,
   ): Promise<boolean | null>
@@ -44,6 +47,8 @@ interface PcpService {
   challengeList(tiers: string[], sortBy: string): Promise<ChallengeBriefDto[]>
 
   challengeGetByName(name: string): Promise<ChallengeDto>
+
+  challengeUpdate(id: number, challenge: ChallengeCreateDto): Promise<void>
 
   challengeDelete(id: number): Promise<void>
 

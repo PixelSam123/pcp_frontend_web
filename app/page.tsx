@@ -76,7 +76,7 @@ export default function Home() {
                     className="flex h-5 w-5 items-center justify-center border border-white"
                   >
                     <Checkbox.Indicator>
-                      <div className="h-5 w-5 bg-white" />
+                      <div className="h-3 w-3 bg-white" />
                     </Checkbox.Indicator>
                   </Checkbox.Root>
                   <label htmlFor={`check-t${tier}`}>T{tier}</label>
@@ -88,8 +88,8 @@ export default function Home() {
               <Dialog.Trigger className="the-btn block w-full">
                 Tag Selection
               </Dialog.Trigger>
-              <TheDialogPortal>
-                <p>Tags are WIP!</p>
+              <TheDialogPortal title="Tag Selection">
+                <p>Note: Tags are WIP!</p>
               </TheDialogPortal>
             </Dialog.Root>
 

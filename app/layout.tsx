@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${jetbrainsMono.className} min-h-full bg-[#1e1e1e] px-3 text-white`}
+        className={`${jetbrainsMono.className} min-h-full bg-[#1e1e1e] px-3 pb-3 text-white`}
       >
         <nav className="sticky top-0 z-10 flex justify-between bg-[#1e1e1e]">
           <div className="flex items-center gap-3">

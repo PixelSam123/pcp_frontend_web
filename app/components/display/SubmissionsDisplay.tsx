@@ -3,6 +3,7 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import { ChallengeSubmissionDto } from '@/types/types'
 import TheDialogPortal from '../TheDialogPortal'
+import SubmissionInteract from '../SubmissionInteract'
 
 export default function SubmissionsDisplay({
   submissions,
@@ -16,9 +17,11 @@ export default function SubmissionsDisplay({
         <p>{submission.code}</p>
 
         <Dialog.Root>
-          <Dialog.Trigger>View Comments & Votes</Dialog.Trigger>
-          <TheDialogPortal title="View Comments & Votes">
-            <p>WIP!</p>
+          <Dialog.Trigger className="the-btn block w-full">
+            View Comments & Votes
+          </Dialog.Trigger>
+          <TheDialogPortal title="Submission Comments & Votes">
+            <SubmissionInteract submissionId={submission.id} />
           </TheDialogPortal>
         </Dialog.Root>
       </div>
