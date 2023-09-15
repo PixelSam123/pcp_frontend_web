@@ -256,7 +256,7 @@ class RealPcpService implements PcpService {
   }
 
   async challengeSubmissionVoteDelete(id: number): Promise<void> {
-    return await fetchJson(`${this.baseUrl}/challenge-votes/${id}`, {
+    return await fetchJson(`${this.baseUrl}/challenge-submission-votes/${id}`, {
       method: 'DELETE',
       credentials: 'include',
     })
