@@ -21,7 +21,7 @@ export default function Challenge({ params }: { params: { name: string } }) {
     data: commentsData,
     error: commentsError,
     isLoading: commentsIsLoading,
-  } = useSWR(`challenges/name/${params.name}`, () =>
+  } = useSWR(`challenge-comments/challenge-name/${params.name}`, () =>
     pcpService.challengeCommentListByChallengeName(params.name),
   )
 
@@ -92,6 +92,7 @@ export default function Challenge({ params }: { params: { name: string } }) {
           votes={votesData ?? []}
           sessionVote={sessionVoteData ?? null}
           challengeId={challenge.id}
+          challengeName={challenge.name}
         />
       )}
 
@@ -127,6 +128,7 @@ export default function Challenge({ params }: { params: { name: string } }) {
 
         <ChallengeSubmissionForm
           challengeId={challenge.id}
+          challengeName={challenge.name}
           codeInitialValue={challenge.initialCode}
         />
       </div>
@@ -134,7 +136,10 @@ export default function Challenge({ params }: { params: { name: string } }) {
       <div className="the-card space-y-3">
         <p className="font-bold">Comments</p>
 
-        <ChallengeCommentForm challengeId={challenge.id} />
+        <ChallengeCommentForm
+          challengeId={challenge.id}
+          challengeName={challenge.name}
+        />
 
         {commentsIsLoading ? (
           <>

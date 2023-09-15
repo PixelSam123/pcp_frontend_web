@@ -2,8 +2,11 @@
 
 import { pcpService } from '@/services/RealPcpService'
 import { FormEvent, useState } from 'react'
+import { useSWRConfig } from 'swr'
 
 export default function SignUpForm() {
+  const { mutate } = useSWRConfig()
+
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -23,6 +26,7 @@ export default function SignUpForm() {
 
     try {
       await pcpService.userCreate({ name: username, password })
+      mutate('users')
       setIsSuccess(true)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error')

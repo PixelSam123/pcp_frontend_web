@@ -3,14 +3,19 @@
 import Editor from '@monaco-editor/react'
 import { pcpService } from '@/services/RealPcpService'
 import { useState } from 'react'
+import { useSWRConfig } from 'swr'
 
 export default function ChallengeSubmissionForm({
   challengeId,
+  challengeName,
   codeInitialValue: initialCode,
 }: {
   challengeId: number
+  challengeName: string
   codeInitialValue: string
 }) {
+  const { mutate } = useSWRConfig()
+
   const [code, setCode] = useState(initialCode)
 
   const [error, setError] = useState('')
@@ -25,6 +30,7 @@ export default function ChallengeSubmissionForm({
         challengeId,
         code: code,
       })
+      mutate(`challenge-submissions/challenge-name/${challengeName}`)
       setIsSuccess(true)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error')

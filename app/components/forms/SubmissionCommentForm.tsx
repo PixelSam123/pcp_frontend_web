@@ -1,11 +1,14 @@
 import { pcpService } from '@/services/RealPcpService'
 import { FormEvent, useState } from 'react'
+import { useSWRConfig } from 'swr'
 
 export default function SubmissionCommentForm({
   submissionId,
 }: {
   submissionId: number
 }) {
+  const { mutate } = useSWRConfig()
+
   const [commentToPost, setCommentToPost] = useState('')
 
   const [error, setError] = useState('')
@@ -21,6 +24,9 @@ export default function SubmissionCommentForm({
         challengeSubmissionId: submissionId,
         content: commentToPost,
       })
+      mutate(
+        `/challenge-submission-comments/challenge-submission-id/${submissionId}`,
+      )
       setIsSuccess(true)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error')

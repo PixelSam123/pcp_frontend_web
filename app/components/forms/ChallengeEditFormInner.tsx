@@ -3,6 +3,7 @@
 import { pcpService } from '@/services/RealPcpService'
 import Editor from '@monaco-editor/react'
 import { useState } from 'react'
+import { useSWRConfig } from 'swr'
 
 export default function ChallengeEditFormInner({
   challengeId,
@@ -19,6 +20,8 @@ export default function ChallengeEditFormInner({
   initialCodeInitialValue: string
   testCasesInitialValue: string
 }) {
+  const { mutate } = useSWRConfig()
+
   const [title, setTitle] = useState(titleInitialValue)
   const [tier, setTier] = useState(tierInitialValue)
   const [description, setDescription] = useState(descriptionInitialValue)
@@ -52,6 +55,7 @@ export default function ChallengeEditFormInner({
         testCase: testCases,
         codeForVerification,
       })
+      mutate('session/challenges')
       setIsSuccess(true)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error')

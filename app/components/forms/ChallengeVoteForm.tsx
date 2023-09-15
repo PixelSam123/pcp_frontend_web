@@ -4,16 +4,21 @@ import { pcpService } from '@/services/RealPcpService'
 import { ChallengeVoteDto } from '@/types/types'
 import { IconThumbDown, IconThumbUp } from '@tabler/icons-react'
 import { useState } from 'react'
+import { useSWRConfig } from 'swr'
 
 export default function ChallengeVoteForm({
   votes,
   sessionVote,
   challengeId,
+  challengeName,
 }: {
   votes: ChallengeVoteDto[]
   sessionVote: ChallengeVoteDto | null
   challengeId: number
+  challengeName: string
 }) {
+  const { mutate } = useSWRConfig()
+
   const [error, setError] = useState('')
 
   const isUpvoted = sessionVote !== null && sessionVote.isUpvote
@@ -35,6 +40,9 @@ export default function ChallengeVoteForm({
           isUpvote: true,
         })
       }
+
+      mutate(`challenge-votes/challenge-name/${challengeName}`)
+      mutate(`session/challenge-votes/name/${challengeName}`)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error')
     }
@@ -56,6 +64,9 @@ export default function ChallengeVoteForm({
           isUpvote: false,
         })
       }
+
+      mutate(`challenge-votes/challenge-name/${challengeName}`)
+      mutate(`session/challenge-votes/name/${challengeName}`)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error')
     }

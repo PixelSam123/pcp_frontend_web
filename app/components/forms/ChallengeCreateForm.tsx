@@ -3,8 +3,11 @@
 import Editor from '@monaco-editor/react'
 import { useState } from 'react'
 import { pcpService } from '@/services/RealPcpService'
+import { useSWRConfig } from 'swr'
 
 export default function ChallengeCreateForm() {
+  const { mutate } = useSWRConfig()
+
   const [title, setTitle] = useState('')
   const [tier, setTier] = useState('5')
   const [description, setDescription] = useState('')
@@ -38,6 +41,7 @@ export default function ChallengeCreateForm() {
         testCase: testCases,
         codeForVerification,
       })
+      mutate('session/challenges')
       setIsSuccess(true)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error')
