@@ -2,8 +2,11 @@
 
 import { pcpService } from '@/services/RealPcpService'
 import { FormEvent, useState } from 'react'
+import { useSWRConfig } from 'swr'
 
 export default function SignInForm() {
+  const { mutate } = useSWRConfig()
+
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
@@ -17,6 +20,8 @@ export default function SignInForm() {
 
     try {
       await pcpService.sessionLogin(username, password)
+      mutate('session')
+      mutate('session/challenges')
       setIsSuccess(true)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error')
