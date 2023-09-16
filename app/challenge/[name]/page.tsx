@@ -92,14 +92,14 @@ export default function Challenge({ params }: { params: { name: string } }) {
           votes={votesData ?? []}
           sessionVote={sessionVoteData ?? null}
           challengeId={challenge.id}
-          challengeName={challenge.name}
+          challengeName={params.name}
         />
       )}
 
       <div className="the-card space-y-3">
         <p className="font-bold">Description</p>
 
-        <p>{challenge.description}</p>
+        <p className="whitespace-pre-wrap text-sm">{challenge.description}</p>
 
         <Dialog.Root>
           <Dialog.Trigger className="the-btn block w-full">
@@ -128,7 +128,7 @@ export default function Challenge({ params }: { params: { name: string } }) {
 
         <ChallengeSubmissionForm
           challengeId={challenge.id}
-          challengeName={challenge.name}
+          challengeName={params.name}
           codeInitialValue={challenge.initialCode}
         />
       </div>
@@ -138,7 +138,7 @@ export default function Challenge({ params }: { params: { name: string } }) {
 
         <ChallengeCommentForm
           challengeId={challenge.id}
-          challengeName={challenge.name}
+          challengeName={params.name}
         />
 
         {commentsIsLoading ? (

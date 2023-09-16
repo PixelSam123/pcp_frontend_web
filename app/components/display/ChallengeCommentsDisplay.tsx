@@ -9,7 +9,7 @@ export default function ChallengeCommentsDisplay({
     comments.map((comment) => (
       <div key={comment.id} className="the-card space-y-3">
         <p className="font-bold">{comment.user.name}</p>
-        <p>{comment.content}</p>
+        <p className="whitespace-pre-wrap">{comment.content}</p>
       </div>
     ))
   ) : (

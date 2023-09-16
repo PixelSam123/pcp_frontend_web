@@ -14,7 +14,7 @@ export default function SubmissionsDisplay({
     submissions.map((submission) => (
       <div key={submission.id} className="the-card space-y-3">
         <p className="font-bold">{submission.user.name}</p>
-        <p>{submission.code}</p>
+        <p className="whitespace-pre-wrap text-sm">{submission.code}</p>
 
         <Dialog.Root>
           <Dialog.Trigger className="the-btn block w-full">
