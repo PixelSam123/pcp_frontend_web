@@ -34,6 +34,8 @@ type ChallengeBriefDto = {
   tier: number
   completedCount: number
   user: UserBriefDto
+  upvoteCount: number
+  downvoteCount: number
 }
 
 type ChallengeSecuredDto = {

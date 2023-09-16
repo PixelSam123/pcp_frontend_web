@@ -24,10 +24,12 @@ export default function ChallengesDisplay({
             {challenge.user.name}
           </p>
           <p>
-            <IconThumbUp size="20" className="inline-block" /> 0
+            <IconThumbUp size="20" className="inline-block" />{' '}
+            {challenge.upvoteCount}
           </p>
           <p>
-            <IconThumbDown size="20" className="inline-block" /> 0
+            <IconThumbDown size="20" className="inline-block" />{' '}
+            {challenge.downvoteCount}
           </p>
           <p>
             <IconTargetArrow size="20" className="inline-block" />{' '}

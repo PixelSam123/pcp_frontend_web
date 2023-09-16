@@ -263,6 +263,6 @@ class RealPcpService implements PcpService {
   }
 }
 
-const instance = new RealPcpService('http://localhost:8080')
+const instance = new RealPcpService('https://pcp.azurewebsites.net')
 
 export { instance as pcpService }
