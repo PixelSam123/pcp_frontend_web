@@ -39,9 +39,9 @@ export default function SessionChallengesDisplay({
       </div>
     ))
   ) : (
-    <>
+    <div>
       <p>No challenges</p>
       <p className="text-xs">Create one!</p>
-    </>
+    </div>
   )
 }
