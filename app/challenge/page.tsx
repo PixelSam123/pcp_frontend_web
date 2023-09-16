@@ -13,7 +13,11 @@ import TheDialogPortal from '@/app/components/TheDialogPortal'
 import ChallengeCommentForm from '@/app/components/forms/ChallengeCommentForm'
 import ChallengeSubmissionForm from '@/app/components/forms/ChallengeSubmissionForm'
 
-export default function Challenge({ params }: { params: { name: string } }) {
+export default function Challenge({
+  searchParams: params,
+}: {
+  searchParams: { name: string }
+}) {
   const [challenge, setChallenge] = useState<ChallengeDto | null>(null)
   const [error, setError] = useState('')
 
@@ -59,6 +63,10 @@ export default function Challenge({ params }: { params: { name: string } }) {
       }
     })()
   }, [params.name])
+
+  if (!params.name) {
+    return <p>Please specify a challenge name.</p>
+  }
 
   if (error) {
     return <p>{error}</p>

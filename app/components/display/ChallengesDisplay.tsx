@@ -39,7 +39,7 @@ export default function ChallengesDisplay({
           <p>Available in:</p>
           <div className="flex gap-3">
             <Link
-              href={`/challenge/${challenge.name}`}
+              href={`/challenge?name=${challenge.name}`}
               className="underline hover:text-sky-400"
             >
               javascript
