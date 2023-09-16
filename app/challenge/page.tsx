@@ -8,16 +8,14 @@ import ChallengeVoteForm from '@/app/components/forms/ChallengeVoteForm'
 import { pcpService } from '@/services/RealPcpService'
 import { ChallengeDto } from '@/types/types'
 import { useEffect, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import useSWR from 'swr'
 import TheDialogPortal from '@/app/components/TheDialogPortal'
 import ChallengeCommentForm from '@/app/components/forms/ChallengeCommentForm'
 import ChallengeSubmissionForm from '@/app/components/forms/ChallengeSubmissionForm'
 
-export default function Challenge({
-  searchParams: params,
-}: {
-  searchParams: { name: string }
-}) {
+export default function Challenge() {
+  const params = useSearchParams()
   const [challenge, setChallenge] = useState<ChallengeDto | null>(null)
   const [error, setError] = useState('')
 
@@ -25,46 +23,54 @@ export default function Challenge({
     data: commentsData,
     error: commentsError,
     isLoading: commentsIsLoading,
-  } = useSWR(`challenge-comments/challenge-name/${params.name}`, () =>
-    pcpService.challengeCommentListByChallengeName(params.name),
+  } = useSWR(
+    `challenge-comments/challenge-name/${params.get('name') ?? ''}`,
+    () =>
+      pcpService.challengeCommentListByChallengeName(params.get('name') ?? ''),
   )
 
   const {
     data: submissionsData,
     error: submissionsError,
     isLoading: submissionsIsLoading,
-  } = useSWR(`challenge-submissions/challenge-name/${params.name}`, () =>
-    pcpService.challengeSubmissionListByChallengeName(params.name),
+  } = useSWR(
+    `challenge-submissions/challenge-name/${params.get('name') ?? ''}`,
+    () =>
+      pcpService.challengeSubmissionListByChallengeName(
+        params.get('name') ?? '',
+      ),
   )
 
   const {
     data: votesData,
     error: votesError,
     isLoading: votesIsLoading,
-  } = useSWR(`challenge-votes/challenge-name/${params.name}`, () =>
-    pcpService.challengeVoteListByChallengeName(params.name),
+  } = useSWR(`challenge-votes/challenge-name/${params.get('name') ?? ''}`, () =>
+    pcpService.challengeVoteListByChallengeName(params.get('name') ?? ''),
   )
 
   const {
     data: sessionVoteData,
     error: sessionVoteError,
     isLoading: sessionVoteIsLoading,
-  } = useSWR(`session/challenge-votes/name/${params.name}`, () =>
-    pcpService.sessionChallengeVoteByChallengeName(params.name),
+  } = useSWR(`session/challenge-votes/name/${params.get('name') ?? ''}`, () =>
+    pcpService.sessionChallengeVoteByChallengeName(params.get('name') ?? ''),
   )
 
   useEffect(() => {
     ;(async () => {
       try {
-        const challenge = await pcpService.challengeGetByName(params.name)
+        const challenge = await pcpService.challengeGetByName(
+          params.get('name') ?? '',
+        )
         setChallenge(challenge)
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error')
       }
     })()
-  }, [params.name])
+  }, [params])
 
-  if (!params.name) {
+  if (!params.get('name')) {
     return <p>Please specify a challenge name.</p>
   }
 
@@ -100,7 +106,7 @@ export default function Challenge({
           votes={votesData ?? []}
           sessionVote={sessionVoteData ?? null}
           challengeId={challenge.id}
-          challengeName={params.name}
+          challengeName={params.get('name') ?? ''}
         />
       )}
 
@@ -136,7 +142,7 @@ export default function Challenge({
 
         <ChallengeSubmissionForm
           challengeId={challenge.id}
-          challengeName={params.name}
+          challengeName={params.get('name') ?? ''}
           codeInitialValue={challenge.initialCode}
         />
       </div>
@@ -146,7 +152,7 @@ export default function Challenge({
 
         <ChallengeCommentForm
           challengeId={challenge.id}
-          challengeName={params.name}
+          challengeName={params.get('name') ?? ''}
         />
 
         {commentsIsLoading ? (
