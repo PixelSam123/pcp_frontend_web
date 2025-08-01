@@ -210,6 +210,7 @@ class RealPcpService implements PcpService {
   ): Promise<ChallengeSubmissionDto[]> {
     return await fetchJson(
       `${this.baseUrl}/challenge-submissions/challenge-name/${challengeName}`,
+      { credentials: 'include' },
     )
   }
 
@@ -263,6 +264,8 @@ class RealPcpService implements PcpService {
   }
 }
 
-const instance = new RealPcpService('https://pcp.azurewebsites.net')
+const instance = new RealPcpService(
+  process.env.NEXT_PUBLIC_PCP_API_URL || 'http://localhost:8000',
+)
 
 export { instance as pcpService }

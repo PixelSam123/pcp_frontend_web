@@ -1,6 +1,10 @@
 import { UserBriefDto } from '@/types/types'
 
 export default function UsersDisplay({ users }: { users: UserBriefDto[] }) {
+  if (users.length === 0) {
+    return <p>No users found</p>
+  }
+
   return (
     <table className="border-collapse border border-white">
       <thead>

@@ -2,9 +2,21 @@
 
 Pixel Code Platform web frontend
 
+## Example Deployment
+
+Head to https://pixelsam123.github.io/pcp
+
 ## Status
 
-Currently missing challenge editing & deletion, voting and submission comments.
+Pretty much feature complete but only supports JavaScript for now.
+
+## Environment variables:
+
+Please enter a [PCP backend](https://github.com/pixelsam123/pcp) deployment link as an environment variable.
+
+```
+NEXT_PUBLIC_PCP_API_URL=
+```
 
 Original README from Next.js below.
 
@@ -28,7 +40,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load JetBrains Mono, a custom Google Font.
 
 ## Learn More
 
