@@ -1,10 +1,13 @@
 # pcp_frontend_web
 
-Pixel Code Platform web frontend
+![pcp banner](https://raw.githubusercontent.com/PixelSam123/pcp_frontend_web/refs/heads/main/docs/pcp.webp)
+
+Welcome to the Pixel Code Platform family of projects. This is the web frontend.  
+Pixel Code Platform is a self-hostable coding challenge platform. The backend is open to contribution!
 
 ## Example Deployment
 
-Head to https://pixelsam123.github.io/pcp
+Not yet available, a demo is available upon request.
 
 ## Status
 
